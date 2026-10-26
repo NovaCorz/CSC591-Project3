@@ -1,0 +1,4 @@
+rob_test
+results/
+__pycache__/
+*.o
