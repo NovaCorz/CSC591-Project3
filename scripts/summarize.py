@@ -30,6 +30,26 @@ def num(pattern, text):
     return float(m.group(1)) if m else None
 
 
+# Raw CSVs are the source of truth. If a machine had no matplotlib (or a run aborted after measuring), rebuild the
+# summaries and plots here, on your own computer.
+import subprocess
+ANALYZER = os.path.join(root, "exercises", ex, "analyze_rob.py")
+def rebuild(rd, run, machine, label, hp):
+    for kind in ("coarse", "fine"):
+        csvp = os.path.join(rd, f"{kind}.csv")
+        if not os.path.exists(csvp):
+            continue
+        summ, png = os.path.join(rd, f"{kind}_summary.txt"), os.path.join(rd, f"{kind}.png")
+        need_summary = not read(summ).strip() or "KNEE_N=" not in read(summ)
+        need_png = not os.path.exists(png)
+        if (need_summary or need_png) and os.path.exists(ANALYZER):
+            cmd = [sys.executable, ANALYZER, csvp, "--title", f"{machine}/{label}/hp{hp} {kind} sweep"]
+            if need_png:
+                cmd += ["--plot", png]
+            out = subprocess.run(cmd, capture_output=True, text=True).stdout
+            if need_summary:
+                open(summ, "w").write(out)
+
 groups = defaultdict(list)  # (machine, label, hp) -> list of run dicts
 for machine in sorted(os.listdir(data)) if os.path.isdir(data) else []:
     exdir = os.path.join(data, machine, ex)
@@ -37,9 +57,10 @@ for machine in sorted(os.listdir(data)) if os.path.isdir(data) else []:
         continue
     for run in sorted(os.listdir(exdir)):
         rd = os.path.join(exdir, run)
-        if os.path.islink(rd) or not os.path.isdir(rd) or not os.path.exists(os.path.join(rd, "run_config.txt")):
+        if run.endswith('_latest') or os.path.islink(rd) or not os.path.isdir(rd) or not os.path.exists(os.path.join(rd, "run_config.txt")):
             continue
         cfg = dict(kv.split("=", 1) for kv in read(os.path.join(rd, "run_config.txt")).split() if "=" in kv)
+        rebuild(rd, run, machine, cfg.get("label", "?"), cfg.get("hp", "?"))
         fine = read(os.path.join(rd, "fine_summary.txt"))
         model = re.search(r"model name\s*:\s*(.*)", read(os.path.join(rd, "sysinfo", "cpu_model.txt")))
         groups[(machine, cfg.get("label", "?"), cfg.get("hp", "?"))].append({
