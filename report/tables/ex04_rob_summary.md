@@ -1,0 +1,12 @@
+| machine | cpu_model | core_label | hugepages | runs_total | runs_confirmed | rob_median | rob_min | rob_max | low_plateau_ns | hi_lo_ratio |
+|---|---|---|---|---|---|---|---|---|---|---|
+| artemisia | Intel(R) Xeon(R) Gold 5420+ | cpu29 | 0 | 4 | 4 | 498.0 | 498.0 | 498.0 | 166.3 | 1.74 |
+| charnwood | Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz | cpu2 | 0 | 3 | 3 | 223.0 | 223.0 | 223.0 | 112.9 | 1.81 |
+| crux | Intel(R) Core(TM) i7-9700 CPU @ 3.00GHz | cpu3 | 0 | 4 | 4 | 222.0 | 222.0 | 222.0 | 90.1 | 1.8 |
+| descent | 13th Gen Intel(R) Core(TM) i7-1370P | ecore | 0 | 4 | 4 | 253.0 | 252.0 | 253.0 | 138.1 | 1.8 |
+| descent | 13th Gen Intel(R) Core(TM) i7-1370P | pcore | 0 | 4 | 4 | 512.0 | 512.0 | 512.0 | 120.8 | 1.85 |
+| elevation | 12th Gen Intel(R) Core(TM) i5-1235U | ecore | 0 | 5 | 5 | 252.0 | 252.0 | 252.0 | 152.5 | 1.62 |
+| elevation | 12th Gen Intel(R) Core(TM) i5-1235U | pcore | 0 | 8 | 8 | 512.0 | 512.0 | 512.0 | 115.1 | 1.75 |
+| ookay | Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz | cpu2 | 0 | 7 | 7 | 222.0 | 222.0 | 222.0 | 87.7 | 1.85 |
+| skylark | AMD EPYC 7532 32-Core Processor | cpu2 | 0 | 5 | 5 | 223.0 | 223.0 | 223.0 | 151.6 | 1.8 |
+| sunbird | Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz | cpu8 | 0 | 4 | 4 | 190.0 | 190.0 | 190.0 | 132.4 | 1.63 |

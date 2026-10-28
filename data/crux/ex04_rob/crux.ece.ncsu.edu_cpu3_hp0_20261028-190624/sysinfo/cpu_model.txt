@@ -1,0 +1,2 @@
+$ bash -c grep -m1 'model name' /proc/cpuinfo
+model name	: Intel(R) Core(TM) i7-9700 CPU @ 3.00GHz

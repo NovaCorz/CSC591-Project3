@@ -1,0 +1,11 @@
+[sunbird] run ex04_rob label=cpu8 core=8 
+== coarse sweep (step 4) on CPU 8 (cpu8) ==
+# core=8 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.5000
+low plateau  (overlapped misses) :    130.3 ns_per_iter
+high plateau (serialized misses) :    271.7 ns_per_iter   ratio hi/lo = 2.08
+first slow N (N_knee)            : 192
+ESTIMATED ROB SIZE ~ N_knee + 2  : 194  (+/- the sweep step; refine with -t 1)
+KNEE_N=192
+== fine sweep (step 1) around N=192 ==
+PRIMARY results (timing only) in results/sunbird.ece.ncsu.edu_cpu8_hp0_20261028-190438/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=8 LABEL=cpu8 HP=0 ./perf_check.sh
