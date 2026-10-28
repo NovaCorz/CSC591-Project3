@@ -1,0 +1,22 @@
+[descent] run ex04_rob label=pcore core=0 
+== coarse sweep (step 4) on CPU 0 (pcore) ==
+# core=0 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.1888
+low plateau  (overlapped misses) :    107.9 ns_per_iter
+high plateau (serialized misses) :    231.3 ns_per_iter   ratio hi/lo = 2.14
+first slow N (N_knee)            : 508
+ESTIMATED ROB SIZE ~ N_knee + 2  : 510  (+/- the sweep step; refine with -t 1)
+KNEE_N=508
+== fine sweep (step 1) around N=508 ==
+PRIMARY results (timing only) in results/descent.ece.ncsu.edu_pcore_hp0_20261028-123059/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=0 LABEL=pcore HP=0 ./perf_check.sh
+[descent] run ex04_rob label=ecore core=19 
+== coarse sweep (step 4) on CPU 19 (ecore) ==
+# core=19 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.1888
+low plateau  (overlapped misses) :    134.5 ns_per_iter
+high plateau (serialized misses) :    276.4 ns_per_iter   ratio hi/lo = 2.05
+first slow N (N_knee)            : 252
+ESTIMATED ROB SIZE ~ N_knee + 2  : 254  (+/- the sweep step; refine with -t 1)
+KNEE_N=252
+== fine sweep (step 1) around N=252 ==
+PRIMARY results (timing only) in results/descent.ece.ncsu.edu_ecore_hp0_20261028-123121/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=19 LABEL=ecore HP=0 ./perf_check.sh

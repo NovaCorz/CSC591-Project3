@@ -1,0 +1,2 @@
+$ ../common/freq_ctl.sh status
+../common/gather_info.sh: line 5: ../common/freq_ctl.sh: Permission denied

@@ -1,0 +1,2 @@
+$ bash -c grep -m1 'model name' /proc/cpuinfo
+model name	: 13th Gen Intel(R) Core(TM) i7-1370P

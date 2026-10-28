@@ -1,0 +1,6 @@
+# core=2 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.3955
+low plateau  (overlapped misses) :    140.0 ns_per_iter
+high plateau (serialized misses) :    305.8 ns_per_iter   ratio hi/lo = 2.18
+first slow N (N_knee)            : 224
+ESTIMATED ROB SIZE ~ N_knee + 2  : 226  (+/- the sweep step; refine with -t 1)
+KNEE_N=224

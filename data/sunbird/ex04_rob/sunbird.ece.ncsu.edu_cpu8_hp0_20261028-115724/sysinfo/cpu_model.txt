@@ -1,0 +1,2 @@
+$ bash -c grep -m1 'model name' /proc/cpuinfo
+model name	: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz

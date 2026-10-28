@@ -1,0 +1,11 @@
+[charnwood] run ex04_rob label=cpu2 core=2 
+== coarse sweep (step 4) on CPU 2 (cpu2) ==
+# core=2 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=3.4080
+low plateau  (overlapped misses) :    101.6 ns_per_iter
+high plateau (serialized misses) :    251.3 ns_per_iter   ratio hi/lo = 2.47
+first slow N (N_knee)            : 224
+ESTIMATED ROB SIZE ~ N_knee + 2  : 226  (+/- the sweep step; refine with -t 1)
+KNEE_N=224
+== fine sweep (step 1) around N=224 ==
+PRIMARY results (timing only) in results/charnwood.ece.ncsu.edu_cpu2_hp0_20261028-153849/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=2 LABEL=cpu2 HP=0 ./perf_check.sh

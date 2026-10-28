@@ -1,0 +1,4 @@
+$ bash -c lscpu | grep -i numa
+NUMA node(s):                            2
+NUMA node0 CPU(s):                       0-31
+NUMA node1 CPU(s):                       32-63

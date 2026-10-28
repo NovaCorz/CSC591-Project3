@@ -1,0 +1,11 @@
+[artemisia] run ex04_rob label=cpu29 core=29 
+== coarse sweep (step 4) on CPU 29 (cpu29) ==
+# core=29 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.0000
+low plateau  (overlapped misses) :    144.5 ns_per_iter
+high plateau (serialized misses) :    305.3 ns_per_iter   ratio hi/lo = 2.11
+first slow N (N_knee)            : 496
+ESTIMATED ROB SIZE ~ N_knee + 2  : 498  (+/- the sweep step; refine with -t 1)
+KNEE_N=496
+== fine sweep (step 1) around N=496 ==
+PRIMARY results (timing only) in results/artemisia.ece.ncsu.edu_cpu29_hp0_20261028-124529/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=29 LABEL=cpu29 HP=0 ./perf_check.sh

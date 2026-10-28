@@ -1,0 +1,1 @@
+/home/jrkuethe/CSC591-Project3/crux/ex04_rob/run_rob.sh: line 40: ../common/freq_ctl.sh: Permission denied

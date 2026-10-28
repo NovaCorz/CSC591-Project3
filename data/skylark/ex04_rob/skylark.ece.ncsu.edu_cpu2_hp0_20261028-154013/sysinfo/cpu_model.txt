@@ -1,0 +1,2 @@
+$ bash -c grep -m1 'model name' /proc/cpuinfo
+model name	: AMD EPYC 7532 32-Core Processor
