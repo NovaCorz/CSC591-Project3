@@ -1,0 +1,109 @@
+bash scripts/fleet.sh all ex04_rob
+[sunbird] deploy ex04_rob (transfer: rsync)
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+[sunbird] run ex04_rob label=cpu8 core=8 
+== coarse sweep (step 4) on CPU 8 (cpu8) ==
+# core=8 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.5000
+low plateau  (overlapped misses) :    130.5 ns_per_iter
+high plateau (serialized misses) :    271.7 ns_per_iter   ratio hi/lo = 2.08
+first slow N (N_knee)            : 192
+ESTIMATED ROB SIZE ~ N_knee + 2  : 194  (+/- the sweep step; refine with -t 1)
+KNEE_N=192
+== fine sweep (step 1) around N=192 ==
+PRIMARY results (timing only) in results/sunbird.ece.ncsu.edu_cpu8_hp0_20261027-162714/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=8 LABEL=cpu8 HP=0 ./perf_check.sh
+[sunbird] pull results
+[charnwood] deploy ex04_rob (transfer: rsync)
+Password: 
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+[charnwood] run ex04_rob label=cpu2 core=2 
+== coarse sweep (step 4) on CPU 2 (cpu2) ==
+# core=2 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=3.4080
+low plateau  (overlapped misses) :    101.6 ns_per_iter
+high plateau (serialized misses) :    251.3 ns_per_iter   ratio hi/lo = 2.47
+first slow N (N_knee)            : 224
+ESTIMATED ROB SIZE ~ N_knee + 2  : 226  (+/- the sweep step; refine with -t 1)
+KNEE_N=224
+== fine sweep (step 1) around N=224 ==
+PRIMARY results (timing only) in results/charnwood.ece.ncsu.edu_cpu2_hp0_20261027-162810/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=2 LABEL=cpu2 HP=0 ./perf_check.sh
+[charnwood] pull results
+[ookay] deploy ex04_rob (transfer: rsync)
+Password: 
+Connection closed by 152.14.96.193 port 22
+[ookay] FAILED (all)
+[upgrade] deploy ex04_rob (transfer: rsync)
+Password: 
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+[upgrade] run ex04_rob label=cpu3 core=3 
+== coarse sweep (step 4) on CPU 3 (cpu3) ==
+# core=3 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=3.1920
+low plateau  (overlapped misses) :     80.7 ns_per_iter
+high plateau (serialized misses) :    188.7 ns_per_iter   ratio hi/lo = 2.34
+first slow N (N_knee)            : 224
+ESTIMATED ROB SIZE ~ N_knee + 2  : 226  (+/- the sweep step; refine with -t 1)
+KNEE_N=224
+== fine sweep (step 1) around N=224 ==
+Traceback (most recent call last):
+  File "/home/jrkuethe/CSC591-Project3/ex04_rob/analyze_rob.py", line 51, in <module>
+    import matplotlib
+ModuleNotFoundError: No module named 'matplotlib'
+[upgrade] FAILED (all)
+[crux] deploy ex04_rob (transfer: rsync)
+Password: 
+Connection closed by 152.14.97.80 port 22
+[crux] FAILED (all)
+[skylark] deploy ex04_rob (transfer: rsync)
+Password: 
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+[skylark] run ex04_rob label=cpu2 core=2 
+== coarse sweep (step 4) on CPU 2 (cpu2) ==
+# core=2 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.3955
+low plateau  (overlapped misses) :    140.0 ns_per_iter
+high plateau (serialized misses) :    305.7 ns_per_iter   ratio hi/lo = 2.18
+first slow N (N_knee)            : 224
+ESTIMATED ROB SIZE ~ N_knee + 2  : 226  (+/- the sweep step; refine with -t 1)
+KNEE_N=224
+== fine sweep (step 1) around N=224 ==
+Traceback (most recent call last):
+  File "/home/jrkuethe/CSC591-Project3/ex04_rob/analyze_rob.py", line 51, in <module>
+    import matplotlib
+ModuleNotFoundError: No module named 'matplotlib'
+[skylark] FAILED (all)
+[thunderbird] deploy ex04_rob (transfer: rsync)
+Password: 
+   48 |     __asm__ volatile("rdtscp\n\tlfence" : "=a"(lo), "=d"(hi)::"rcx", "memory");
+      |     ^~~~~~~
+make: *** [Makefile:5: rob_test] Error 1
+[thunderbird] run ex04_rob label=cpu5 core=5 
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+rob_test.c: In function ‘rob_kernel’:
+rob_test.c:66:5: error: unknown register name ‘rcx’ in ‘asm’
+   66 |     __asm__ volatile(
+      |     ^~~~~~~
+rob_test.c:66:5: error: unknown register name ‘rax’ in ‘asm’
+rob_test.c: In function ‘main’:
+rob_test.c:48:5: error: unknown register name ‘rcx’ in ‘asm’
+   48 |     __asm__ volatile("rdtscp\n\tlfence" : "=a"(lo), "=d"(hi)::"rcx", "memory");
+      |     ^~~~~~~
+rob_test.c:48:5: error: unknown register name ‘rcx’ in ‘asm’
+   48 |     __asm__ volatile("rdtscp\n\tlfence" : "=a"(lo), "=d"(hi)::"rcx", "memory");
+      |     ^~~~~~~
+make: *** [Makefile:5: rob_test] Error 1
+[thunderbird] FAILED (all)
+[artemisia] deploy ex04_rob (transfer: rsync)
+Password: 
+cc -O2 -Wall -Wextra -march=native -o rob_test rob_test.c
+[artemisia] run ex04_rob label=cpu29 core=29 
+== coarse sweep (step 4) on CPU 29 (cpu29) ==
+# core=29 buf_MiB=512 iters=20000 reps=15 hugepages=0 tsc_ghz=2.0000
+low plateau  (overlapped misses) :    143.9 ns_per_iter
+high plateau (serialized misses) :    304.0 ns_per_iter   ratio hi/lo = 2.11
+first slow N (N_knee)            : 496
+ESTIMATED ROB SIZE ~ N_knee + 2  : 498  (+/- the sweep step; refine with -t 1)
+KNEE_N=496
+== fine sweep (step 1) around N=496 ==
+PRIMARY results (timing only) in results/artemisia.ece.ncsu.edu_cpu29_hp0_20261027-163430/
+Timing-based estimate confirmed. Only now may you run the secondary counter check: CORE=29 LABEL=cpu29 HP=0 ./perf_check.sh
+[artemisia] pull results
+done. Next: python3 scripts/summarize.py ex04_rob
