@@ -1,0 +1,85 @@
+[elevation] run ex03_branch_prediction label=pcore core=0 
+== ex03_branch_prediction on CPU 0 (pcore) ==
+core clock estimate: 4.36 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.228
+     p01                0.01           0.311
+     p02                0.02           0.397
+     p05                0.05           0.646
+     p10                0.10           1.040
+     p20                0.20           1.624
+     p30                0.30           2.167
+     p40                0.40           2.793
+     p50                0.50           3.195
+  sorted           (pattern)           0.231
+     alt           (pattern)           0.228
+   per16           (pattern)           0.228
+   per64           (pattern)           0.614
+
+linear fit over random data: T = 0.321 ns + 6.02 ns x e      (R^2 = 0.994)
+misprediction penalty ~ 6.0 ns = 26.3 cycles   (two-point estimate (p50-sorted)/0.5: 5.9 ns = 25.9 cycles)
+random 50% data is 13.8x slower than sorted data -> branch prediction is clearly in use
+     alt: -0.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16: -0.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64: 12.9% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.231
+T_RAND50_NS=3.195
+SLOWDOWN_RAND50=13.82
+PENALTY_NS=6.02
+PENALTY_CYCLES=26.29
+PENALTY_CYCLES_TWO_POINT=25.88
+FIT_R2=0.994
+PATTERN_ALT_COST_REMAINING=-0.001
+PATTERN_PER16_COST_REMAINING=-0.001
+PATTERN_PER64_COST_REMAINING=0.129
+CORE_GHZ=4.365
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_pcore_hp0_20261030-120051/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex03_branch_prediction/results/elevation.ece.ncsu.edu_pcore_hp0_20261030-120051/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
+REMINDER: hybrid CPU. Still to do: the ecore run.
+[elevation] run ex03_branch_prediction label=ecore core=11 
+== ex03_branch_prediction on CPU 11 (ecore) ==
+core clock estimate: 3.28 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.618
+     p01                0.01           0.726
+     p02                0.02           0.823
+     p05                0.05           1.085
+     p10                0.10           1.482
+     p20                0.20           2.273
+     p30                0.30           3.127
+     p40                0.40           4.042
+     p50                0.50           4.690
+  sorted           (pattern)           0.630
+     alt           (pattern)           0.922
+   per16           (pattern)           0.958
+   per64           (pattern)           0.902
+
+linear fit over random data: T = 0.651 ns + 8.23 ns x e      (R^2 = 0.999)
+misprediction penalty ~ 8.2 ns = 27.0 cycles   (two-point estimate (p50-sorted)/0.5: 8.1 ns = 26.6 cycles)
+random 50% data is 7.4x slower than sorted data -> branch prediction is clearly in use
+     alt:  7.2% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  8.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  6.7% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.630
+T_RAND50_NS=4.690
+SLOWDOWN_RAND50=7.44
+PENALTY_NS=8.23
+PENALTY_CYCLES=27.00
+PENALTY_CYCLES_TWO_POINT=26.64
+FIT_R2=0.999
+PATTERN_ALT_COST_REMAINING=0.072
+PATTERN_PER16_COST_REMAINING=0.081
+PATTERN_PER64_COST_REMAINING=0.067
+CORE_GHZ=3.280
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_ecore_hp0_20261030-120053/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex03_branch_prediction/results/elevation.ece.ncsu.edu_ecore_hp0_20261030-120053/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

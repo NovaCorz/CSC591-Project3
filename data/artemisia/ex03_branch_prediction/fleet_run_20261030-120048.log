@@ -1,0 +1,42 @@
+[artemisia] run ex03_branch_prediction label=cpu29 core=29 
+== ex03_branch_prediction on CPU 29 (cpu29) ==
+core clock estimate: 2.69 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.749
+     p01                0.01           0.910
+     p02                0.02           1.070
+     p05                0.05           1.521
+     p10                0.10           2.190
+     p20                0.20           3.216
+     p30                0.30           4.004
+     p40                0.40           4.649
+     p50                0.50           5.069
+  sorted           (pattern)           0.561
+     alt           (pattern)           0.930
+   per16           (pattern)           0.957
+   per64           (pattern)           0.997
+
+linear fit over random data: T = 1.031 ns + 8.92 ns x e      (R^2 = 0.971)
+misprediction penalty ~ 8.9 ns = 24.0 cycles   (two-point estimate (p50-sorted)/0.5: 9.0 ns = 24.3 cycles)
+random 50% data is 9.0x slower than sorted data -> branch prediction is clearly in use
+     alt:  8.2% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  8.8% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  9.7% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.561
+T_RAND50_NS=5.069
+SLOWDOWN_RAND50=9.04
+PENALTY_NS=8.92
+PENALTY_CYCLES=24.01
+PENALTY_CYCLES_TWO_POINT=24.26
+FIT_R2=0.971
+PATTERN_ALT_COST_REMAINING=0.082
+PATTERN_PER16_COST_REMAINING=0.088
+PATTERN_PER64_COST_REMAINING=0.097
+CORE_GHZ=2.690
+STATUS=ok
+plot written to results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-120045/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/artemisia/ex03_branch_prediction/results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-120045/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

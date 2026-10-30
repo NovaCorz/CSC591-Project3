@@ -1,0 +1,42 @@
+[sunbird] run ex03_branch_prediction label=cpu8 core=8 
+== ex03_branch_prediction on CPU 8 (cpu8) ==
+core clock estimate: 2.30 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.803
+     p01                0.01           0.955
+     p02                0.02           1.094
+     p05                0.05           1.461
+     p10                0.10           2.019
+     p20                0.20           2.946
+     p30                0.30           3.885
+     p40                0.40           4.670
+     p50                0.50           4.927
+  sorted           (pattern)           0.713
+     alt           (pattern)           1.000
+   per16           (pattern)           0.813
+   per64           (pattern)           0.837
+
+linear fit over random data: T = 1.002 ns + 8.70 ns x e      (R^2 = 0.980)
+misprediction penalty ~ 8.7 ns = 20.0 cycles   (two-point estimate (p50-sorted)/0.5: 8.4 ns = 19.4 cycles)
+random 50% data is 6.9x slower than sorted data -> branch prediction is clearly in use
+     alt:  6.8% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  2.4% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  3.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.713
+T_RAND50_NS=4.927
+SLOWDOWN_RAND50=6.91
+PENALTY_NS=8.70
+PENALTY_CYCLES=20.01
+PENALTY_CYCLES_TWO_POINT=19.40
+FIT_R2=0.980
+PATTERN_ALT_COST_REMAINING=0.068
+PATTERN_PER16_COST_REMAINING=0.024
+PATTERN_PER64_COST_REMAINING=0.030
+CORE_GHZ=2.301
+STATUS=ok
+plot written to results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-120020/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/sunbird/ex03_branch_prediction/results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-120020/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

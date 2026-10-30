@@ -1,0 +1,84 @@
+[descent] run ex03_branch_prediction label=pcore core=0 
+== ex03_branch_prediction on CPU 0 (pcore) ==
+core clock estimate: 4.86 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.201
+     p01                0.01           0.275
+     p02                0.02           0.350
+     p05                0.05           0.574
+     p10                0.10           0.900
+     p20                0.20           1.413
+     p30                0.30           1.901
+     p40                0.40           2.447
+     p50                0.50           2.788
+  sorted           (pattern)           0.201
+     alt           (pattern)           0.201
+   per16           (pattern)           0.202
+   per64           (pattern)           0.533
+
+linear fit over random data: T = 0.282 ns + 5.26 ns x e      (R^2 = 0.994)
+misprediction penalty ~ 5.3 ns = 25.5 cycles   (two-point estimate (p50-sorted)/0.5: 5.2 ns = 25.1 cycles)
+random 50% data is 13.9x slower than sorted data -> branch prediction is clearly in use
+     alt:  0.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  0.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64: 12.8% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.201
+T_RAND50_NS=2.788
+SLOWDOWN_RAND50=13.86
+PENALTY_NS=5.26
+PENALTY_CYCLES=25.53
+PENALTY_CYCLES_TWO_POINT=25.12
+FIT_R2=0.994
+PATTERN_ALT_COST_REMAINING=0.000
+PATTERN_PER16_COST_REMAINING=0.000
+PATTERN_PER64_COST_REMAINING=0.128
+CORE_GHZ=4.855
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_pcore_hp0_20261030-120152/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/descent/ex03_branch_prediction/results/descent.ece.ncsu.edu_pcore_hp0_20261030-120152/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
+[descent] run ex03_branch_prediction label=ecore core=19 
+== ex03_branch_prediction on CPU 19 (ecore) ==
+core clock estimate: 3.68 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.525
+     p01                0.01           0.618
+     p02                0.02           0.698
+     p05                0.05           0.918
+     p10                0.10           1.257
+     p20                0.20           1.922
+     p30                0.30           2.642
+     p40                0.40           3.423
+     p50                0.50           3.956
+  sorted           (pattern)           0.534
+     alt           (pattern)           0.779
+   per16           (pattern)           0.814
+   per64           (pattern)           0.786
+
+linear fit over random data: T = 0.554 ns + 6.95 ns x e      (R^2 = 0.999)
+misprediction penalty ~ 6.9 ns = 25.6 cycles   (two-point estimate (p50-sorted)/0.5: 6.8 ns = 25.2 cycles)
+random 50% data is 7.4x slower than sorted data -> branch prediction is clearly in use
+     alt:  7.2% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  8.2% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  7.4% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.534
+T_RAND50_NS=3.956
+SLOWDOWN_RAND50=7.41
+PENALTY_NS=6.95
+PENALTY_CYCLES=25.55
+PENALTY_CYCLES_TWO_POINT=25.18
+FIT_R2=0.999
+PATTERN_ALT_COST_REMAINING=0.072
+PATTERN_PER16_COST_REMAINING=0.082
+PATTERN_PER64_COST_REMAINING=0.074
+CORE_GHZ=3.679
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_ecore_hp0_20261030-120155/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/descent/ex03_branch_prediction/results/descent.ece.ncsu.edu_ecore_hp0_20261030-120155/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

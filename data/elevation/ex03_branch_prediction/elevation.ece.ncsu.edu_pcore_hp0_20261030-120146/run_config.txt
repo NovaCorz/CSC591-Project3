@@ -1,0 +1,1 @@
+core=0 label=pcore hp=0 hybrid=1 run=20261030-120146

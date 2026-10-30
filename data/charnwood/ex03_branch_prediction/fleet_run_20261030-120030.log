@@ -1,0 +1,42 @@
+[charnwood] run ex03_branch_prediction label=cpu2 core=2 
+== ex03_branch_prediction on CPU 2 (cpu2) ==
+core clock estimate: 3.03 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.529
+     p01                0.01           0.598
+     p02                0.02           0.670
+     p05                0.05           0.884
+     p10                0.10           1.245
+     p20                0.20           2.014
+     p30                0.30           2.722
+     p40                0.40           3.322
+     p50                0.50           3.565
+  sorted           (pattern)           0.530
+     alt           (pattern)           0.714
+   per16           (pattern)           0.813
+   per64           (pattern)           0.804
+
+linear fit over random data: T = 0.588 ns + 6.49 ns x e      (R^2 = 0.987)
+misprediction penalty ~ 6.5 ns = 19.7 cycles   (two-point estimate (p50-sorted)/0.5: 6.1 ns = 18.4 cycles)
+random 50% data is 6.7x slower than sorted data -> branch prediction is clearly in use
+     alt:  6.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  9.3% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  9.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.530
+T_RAND50_NS=3.565
+SLOWDOWN_RAND50=6.73
+PENALTY_NS=6.49
+PENALTY_CYCLES=19.69
+PENALTY_CYCLES_TWO_POINT=18.41
+FIT_R2=0.987
+PATTERN_ALT_COST_REMAINING=0.061
+PATTERN_PER16_COST_REMAINING=0.093
+PATTERN_PER64_COST_REMAINING=0.090
+CORE_GHZ=3.033
+STATUS=ok
+plot written to results/charnwood.ece.ncsu.edu_cpu2_hp0_20261030-120027/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/charnwood/ex03_branch_prediction/results/charnwood.ece.ncsu.edu_cpu2_hp0_20261030-120027/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

@@ -1,0 +1,38 @@
+core clock estimate: 2.28 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.802
+     p01                0.01           0.955
+     p02                0.02           1.093
+     p05                0.05           1.460
+     p10                0.10           2.015
+     p20                0.20           2.944
+     p30                0.30           3.896
+     p40                0.40           4.714
+     p50                0.50           4.920
+  sorted           (pattern)           0.713
+     alt           (pattern)           1.002
+   per16           (pattern)           0.812
+   per64           (pattern)           0.841
+
+linear fit over random data: T = 1.001 ns + 8.73 ns x e      (R^2 = 0.979)
+misprediction penalty ~ 8.7 ns = 19.9 cycles   (two-point estimate (p50-sorted)/0.5: 8.4 ns = 19.2 cycles)
+random 50% data is 6.9x slower than sorted data -> branch prediction is clearly in use
+     alt:  6.9% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  2.4% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  3.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.713
+T_RAND50_NS=4.920
+SLOWDOWN_RAND50=6.90
+PENALTY_NS=8.73
+PENALTY_CYCLES=19.94
+PENALTY_CYCLES_TWO_POINT=19.21
+FIT_R2=0.979
+PATTERN_ALT_COST_REMAINING=0.069
+PATTERN_PER16_COST_REMAINING=0.024
+PATTERN_PER64_COST_REMAINING=0.030
+CORE_GHZ=2.284
+STATUS=ok
+plot written to results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-120206/plot.png

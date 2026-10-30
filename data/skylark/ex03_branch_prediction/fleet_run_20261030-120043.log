@@ -1,0 +1,42 @@
+[skylark] run ex03_branch_prediction label=cpu2 core=2 
+== ex03_branch_prediction on CPU 2 (cpu2) ==
+core clock estimate: 3.29 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.612
+     p01                0.01           0.748
+     p02                0.02           0.846
+     p05                0.05           1.079
+     p10                0.10           1.420
+     p20                0.20           2.162
+     p30                0.30           3.166
+     p40                0.40           3.995
+     p50                0.50           4.249
+  sorted           (pattern)           0.587
+     alt           (pattern)           1.067
+   per16           (pattern)           0.689
+   per64           (pattern)           0.825
+
+linear fit over random data: T = 0.683 ns + 7.68 ns x e      (R^2 = 0.989)
+misprediction penalty ~ 7.7 ns = 25.2 cycles   (two-point estimate (p50-sorted)/0.5: 7.3 ns = 24.1 cycles)
+random 50% data is 7.2x slower than sorted data -> branch prediction is clearly in use
+     alt: 13.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  2.8% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64:  6.5% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.587
+T_RAND50_NS=4.249
+SLOWDOWN_RAND50=7.24
+PENALTY_NS=7.68
+PENALTY_CYCLES=25.24
+PENALTY_CYCLES_TWO_POINT=24.08
+FIT_R2=0.989
+PATTERN_ALT_COST_REMAINING=0.131
+PATTERN_PER16_COST_REMAINING=0.028
+PATTERN_PER64_COST_REMAINING=0.065
+CORE_GHZ=3.287
+STATUS=ok
+plot written to results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-120040/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/skylark/ex03_branch_prediction/results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-120040/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

@@ -1,0 +1,38 @@
+core clock estimate: 4.98 GHz
+    mode   mispredict frac e    ns / element
+     p00                0.00           0.201
+     p01                0.01           0.275
+     p02                0.02           0.351
+     p05                0.05           0.574
+     p10                0.10           0.901
+     p20                0.20           1.417
+     p30                0.30           1.904
+     p40                0.40           2.446
+     p50                0.50           2.790
+  sorted           (pattern)           0.201
+     alt           (pattern)           0.201
+   per16           (pattern)           0.203
+   per64           (pattern)           0.535
+
+linear fit over random data: T = 0.283 ns + 5.26 ns x e      (R^2 = 0.994)
+misprediction penalty ~ 5.3 ns = 26.2 cycles   (two-point estimate (p50-sorted)/0.5: 5.2 ns = 25.8 cycles)
+random 50% data is 13.9x slower than sorted data -> branch prediction is clearly in use
+     alt: -0.0% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per16:  0.1% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+   per64: 12.9% of the random-data misprediction cost remains  ->  pattern learned by the predictor
+(the penalty above also contains the data-load and compare latency before the branch resolves, so it is an upper bound
+ for the front-end pipeline length; see ex15)
+PREDICTION_USED=yes
+T_SORTED_NS=0.201
+T_RAND50_NS=2.790
+SLOWDOWN_RAND50=13.87
+PENALTY_NS=5.26
+PENALTY_CYCLES=26.22
+PENALTY_CYCLES_TWO_POINT=25.81
+FIT_R2=0.994
+PATTERN_ALT_COST_REMAINING=-0.000
+PATTERN_PER16_COST_REMAINING=0.001
+PATTERN_PER64_COST_REMAINING=0.129
+CORE_GHZ=4.984
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_pcore_hp0_20261030-120243/plot.png
