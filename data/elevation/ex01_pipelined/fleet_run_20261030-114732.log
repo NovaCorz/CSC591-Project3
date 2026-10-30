@@ -1,0 +1,58 @@
+[elevation] run ex01_pipelined label=pcore core=0 
+== ex01_pipelined on CPU 0 (pcore) ==
+core clock estimate (dependent register-add chain): 4.36 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          0.99       0.34
+2                  1.98              1.09              1.99          1.96       0.67
+3                  2.96              1.06              2.97          2.93       1.00
+4                  3.48              1.09              2.98          3.45       1.00
+5                  4.19              1.07              2.98          4.15       1.00
+6                  3.99              1.06              2.98          3.95       1.00
+8                  4.76              1.09              2.97          4.71       1.00
+12                 5.05              1.12              2.97          5.00       0.99
+
+add_reg: 5.0x speedup, saturating at K=8  -> machine sustains ~5.0 independent adds per cycle
+imul   : 3.0x speedup, saturating at K=3  -> dependent imul latency ~3.0 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 5.41x  (immediate adds are folded/accelerated at rename)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=2.98
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=2.98
+ADD_PEAK_IPC=5.05
+ADD_SATURATION_K=8
+ADD_IMM_FOLD_FACTOR=5.41
+CORE_GHZ=4.363
+K1_SPREAD=0.009
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_pcore_hp0_20261030-114728/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex01_pipelined/results/elevation.ece.ncsu.edu_pcore_hp0_20261030-114728/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
+[elevation] run ex01_pipelined label=ecore core=11 
+== ex01_pipelined on CPU 11 (ecore) ==
+core clock estimate (dependent register-add chain): 3.28 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          1.00       0.20
+2                  1.96              1.96              2.00          1.96       0.40
+3                  2.61              2.62              3.00          2.61       0.60
+4                  3.30              3.30              4.00          3.30       0.80
+5                  3.26              3.31              5.00          3.26       1.00
+6                  3.66              3.66              5.48          3.66       1.10
+8                  3.89              3.89              7.19          3.89       1.44
+12                 3.96              3.96              9.57          3.96       1.92
+
+add_reg: 4.0x speedup, saturating at K=6  -> machine sustains ~4.0 independent adds per cycle
+imul   : 9.6x speedup, saturating at K=12  -> dependent imul latency ~5.0 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 1.00x  (no special handling of immediate adds)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=9.57
+IMUL_SATURATION_K=12
+IMUL_LATENCY_CYCLES=4.99
+ADD_PEAK_IPC=3.96
+ADD_SATURATION_K=6
+ADD_IMM_FOLD_FACTOR=1.00
+CORE_GHZ=3.283
+K1_SPREAD=0.001
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_ecore_hp0_20261030-114730/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex01_pipelined/results/elevation.ece.ncsu.edu_ecore_hp0_20261030-114730/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

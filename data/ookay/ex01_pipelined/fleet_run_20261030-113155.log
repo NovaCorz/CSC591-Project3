@@ -1,0 +1,2 @@
+[ookay] run ex01_pipelined label=cpu2 core=2 
+../common/run_lib.sh: line 36: ../common/gather_info.sh: Permission denied

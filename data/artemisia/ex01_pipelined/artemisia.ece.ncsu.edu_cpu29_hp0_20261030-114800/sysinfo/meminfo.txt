@@ -1,0 +1,10 @@
+$ bash -c grep -E 'MemTotal|HugePages|Hugepagesize' /proc/meminfo
+MemTotal:       525473572 kB
+AnonHugePages:  20627456 kB
+ShmemHugePages:        0 kB
+FileHugePages:  30457856 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB

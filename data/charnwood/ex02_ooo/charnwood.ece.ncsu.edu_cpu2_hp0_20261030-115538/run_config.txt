@@ -1,0 +1,1 @@
+core=2 label=cpu2 hp=0 hybrid=0 run=20261030-115538

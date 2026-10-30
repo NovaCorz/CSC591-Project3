@@ -1,0 +1,30 @@
+[ookay] run ex02_ooo label=cpu2 core=2 
+== ex02_ooo on CPU 2 (cpu2) ==
+core clock estimate: 4.18 GHz   |   miss latency (F=0): 79.1 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0                79.1ns              79.0ns          -0.1ns
+   32                79.0ns              87.2ns           8.2ns
+   64                79.0ns              94.6ns          15.6ns
+   96                79.0ns             102.4ns          23.4ns
+  128                79.0ns             110.3ns          31.3ns
+  160                86.3ns             118.2ns          31.9ns
+  192                93.7ns             126.2ns          32.5ns
+  224               101.5ns             134.0ns          32.5ns
+  256               109.3ns             142.3ns          33.0ns
+  288               117.2ns             153.5ns          36.3ns
+  320               125.1ns             160.9ns          35.8ns
+
+dependent filler: 0.255 ns per filler = 1.06 cycles each (regression over all F)  -> at F=128 it adds 32.6 ns,
+                  independent filler adds 2.0 ns  ->  94% of the filler work was hidden under the miss
+independent curve starts rising at F = 176   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=79.1
+DEP_COST_NS=32.6
+INDEP_COST_NS=2.0
+DEP_CYCLES_PER_FILLER=1.06
+INDEP_RISE_F=176
+CORE_GHZ=4.179
+STATUS=ok
+plot written to results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-115740/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/ookay/ex02_ooo/results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-115740/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

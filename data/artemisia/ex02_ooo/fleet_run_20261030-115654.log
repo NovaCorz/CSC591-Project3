@@ -1,0 +1,30 @@
+[artemisia] run ex02_ooo label=cpu29 core=29 
+== ex02_ooo on CPU 29 (cpu29) ==
+core clock estimate: 2.69 GHz   |   miss latency (F=0): 139.9 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0               139.9ns             140.1ns           0.2ns
+   32               139.9ns             151.3ns          11.4ns
+   64               139.9ns             163.2ns          23.3ns
+   96               139.9ns             175.3ns          35.4ns
+  128               140.1ns             187.0ns          46.9ns
+  160               140.1ns             199.1ns          59.1ns
+  192               140.1ns             211.0ns          70.9ns
+  224               152.6ns             222.9ns          70.2ns
+  256               164.1ns             234.8ns          70.7ns
+  288               176.5ns             246.8ns          70.3ns
+  320               188.3ns             258.6ns          70.3ns
+
+dependent filler: 0.372 ns per filler = 1.00 cycles each (regression over all F)  -> at F=128 it adds 47.6 ns,
+                  independent filler adds 0.1 ns  ->  100% of the filler work was hidden under the miss
+independent curve starts rising at F = 240   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=139.9
+DEP_COST_NS=47.6
+INDEP_COST_NS=0.1
+DEP_CYCLES_PER_FILLER=1.00
+INDEP_RISE_F=240
+CORE_GHZ=2.690
+STATUS=ok
+plot written to results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-115651/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/artemisia/ex02_ooo/results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-115651/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

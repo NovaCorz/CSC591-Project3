@@ -1,0 +1,30 @@
+[sunbird] run ex02_ooo label=cpu8 core=8 
+== ex02_ooo on CPU 8 (cpu8) ==
+core clock estimate: 2.49 GHz   |   miss latency (F=0): 105.2 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0               105.2ns             105.3ns           0.1ns
+   32               105.2ns             117.5ns          12.3ns
+   64               105.3ns             130.8ns          25.5ns
+   96               105.3ns             144.2ns          38.9ns
+  128               113.2ns             157.3ns          44.2ns
+  160               125.4ns             170.4ns          45.1ns
+  192               139.2ns             183.6ns          44.4ns
+  224               152.2ns             196.0ns          43.7ns
+  256               165.1ns             209.2ns          44.1ns
+  288               178.2ns             222.3ns          44.2ns
+  320               190.8ns             235.2ns          44.4ns
+
+dependent filler: 0.408 ns per filler = 1.02 cycles each (regression over all F)  -> at F=128 it adds 52.2 ns,
+                  independent filler adds 8.4 ns  ->  84% of the filler work was hidden under the miss
+independent curve starts rising at F = 144   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=105.2
+DEP_COST_NS=52.2
+INDEP_COST_NS=8.4
+DEP_CYCLES_PER_FILLER=1.02
+INDEP_RISE_F=144
+CORE_GHZ=2.495
+STATUS=ok
+plot written to results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-115530/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/sunbird/ex02_ooo/results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-115530/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

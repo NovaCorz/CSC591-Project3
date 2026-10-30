@@ -1,0 +1,29 @@
+[sunbird] run ex01_pipelined label=cpu8 core=8 
+== ex01_pipelined on CPU 8 (cpu8) ==
+core clock estimate (dependent register-add chain): 2.31 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          1.08       0.36
+2                  1.98              1.98              2.00          2.14       0.72
+3                  2.48              2.48              3.00          2.68       1.08
+4                  3.29              3.29              3.00          3.55       1.08
+5                  3.68              3.53              3.00          3.98       1.08
+6                  3.94              3.92              3.00          4.26       1.08
+8                  3.94              3.88              3.00          4.25       1.08
+12                 3.98              3.96              3.00          4.30       1.08
+
+add_reg: 4.0x speedup, saturating at K=5  -> machine sustains ~4.0 independent adds per cycle
+imul   : 3.0x speedup, saturating at K=3  -> dependent imul latency ~2.8 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 1.00x  (no special handling of immediate adds)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=3.00
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=2.78
+ADD_PEAK_IPC=3.98
+ADD_SATURATION_K=5
+ADD_IMM_FOLD_FACTOR=1.00
+CORE_GHZ=2.308
+K1_SPREAD=0.001
+STATUS=ok
+plot written to results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-114743/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/sunbird/ex01_pipelined/results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-114743/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

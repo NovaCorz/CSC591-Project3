@@ -1,0 +1,26 @@
+core clock estimate: 4.39 GHz   |   miss latency (F=0): 92.8 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0                92.8ns              92.4ns          -0.5ns
+   32                92.7ns             100.5ns           7.9ns
+   64                92.3ns             108.3ns          16.0ns
+   96                92.3ns             116.2ns          23.9ns
+  128                92.6ns             123.9ns          31.3ns
+  160                93.6ns             131.7ns          38.1ns
+  192                92.4ns             139.4ns          47.0ns
+  224                92.6ns             147.2ns          54.6ns
+  256               103.1ns             155.0ns          51.9ns
+  288               111.0ns             162.6ns          51.7ns
+  320               118.8ns             170.5ns          51.7ns
+
+dependent filler: 0.243 ns per filler = 1.07 cycles each (regression over all F)  -> at F=128 it adds 31.1 ns,
+                  independent filler adds 0.0 ns  ->  100% of the filler work was hidden under the miss
+independent curve starts rising at F = 256   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=92.8
+DEP_COST_NS=31.1
+INDEP_COST_NS=0.0
+DEP_CYCLES_PER_FILLER=1.07
+INDEP_RISE_F=256
+CORE_GHZ=4.387
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_pcore_hp0_20261030-115802/plot.png

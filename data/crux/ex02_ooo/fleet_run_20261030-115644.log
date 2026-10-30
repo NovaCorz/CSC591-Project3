@@ -1,0 +1,30 @@
+[crux] run ex02_ooo label=cpu3 core=3 
+== ex02_ooo on CPU 3 (cpu3) ==
+core clock estimate: 4.49 GHz   |   miss latency (F=0): 79.6 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0                79.6ns              79.5ns          -0.2ns
+   32                79.6ns              86.0ns           6.4ns
+   64                79.6ns              92.6ns          13.0ns
+   96                79.6ns              99.7ns          20.1ns
+  128                79.6ns             106.7ns          27.1ns
+  160                84.9ns             113.8ns          28.9ns
+  192                91.5ns             120.8ns          29.3ns
+  224                98.3ns             127.7ns          29.4ns
+  256               105.4ns             138.0ns          32.6ns
+  288               112.5ns             144.6ns          32.2ns
+  320               119.3ns             151.4ns          32.0ns
+
+dependent filler: 0.228 ns per filler = 1.02 cycles each (regression over all F)  -> at F=128 it adds 29.1 ns,
+                  independent filler adds 1.3 ns  ->  95% of the filler work was hidden under the miss
+independent curve starts rising at F = 176   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=79.6
+DEP_COST_NS=29.1
+INDEP_COST_NS=1.3
+DEP_CYCLES_PER_FILLER=1.02
+INDEP_RISE_F=176
+CORE_GHZ=4.485
+STATUS=ok
+plot written to results/crux.ece.ncsu.edu_cpu3_hp0_20261030-115641/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/crux/ex02_ooo/results/crux.ece.ncsu.edu_cpu3_hp0_20261030-115641/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

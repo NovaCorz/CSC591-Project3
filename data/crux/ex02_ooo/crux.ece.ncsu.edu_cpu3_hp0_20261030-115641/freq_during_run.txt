@@ -1,0 +1,9 @@
+cpu0 gov=powersave min=800000 max=4700000 cur=1900002
+cpu1 gov=powersave min=800000 max=4700000 cur=1600013
+cpu2 gov=powersave min=800000 max=4700000 cur=1100208
+cpu3 gov=powersave min=800000 max=4700000 cur=1100008
+cpu4 gov=powersave min=800000 max=4700000 cur=1100005
+cpu5 gov=powersave min=800000 max=4700000 cur=1099945
+cpu6 gov=powersave min=800000 max=4700000 cur=1100015
+cpu7 gov=powersave min=800000 max=4700000 cur=1100241
+intel_pstate no_turbo=0

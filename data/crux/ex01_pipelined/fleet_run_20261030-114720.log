@@ -1,0 +1,29 @@
+[crux] run ex01_pipelined label=cpu3 core=3 
+== ex01_pipelined on CPU 3 (cpu3) ==
+core clock estimate (dependent register-add chain): 2.86 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          1.64       0.55
+2                  1.93              1.93              2.00          3.16       1.09
+3                  2.43              2.43              3.00          3.97       1.64
+4                  3.38              3.38              3.00          5.52       1.64
+5                  3.52              3.52              3.00          5.75       1.64
+6                  3.86              3.88              3.00          6.31       1.64
+8                  3.97              3.97              3.00          6.49       1.64
+12                 3.98              3.98              3.00          6.51       1.64
+
+add_reg: 4.0x speedup, saturating at K=6  -> machine sustains ~4.0 independent adds per cycle
+imul   : 3.0x speedup, saturating at K=3  -> dependent imul latency ~1.8 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 1.00x  (no special handling of immediate adds)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=3.00
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=1.83
+ADD_PEAK_IPC=3.98
+ADD_SATURATION_K=6
+ADD_IMM_FOLD_FACTOR=1.00
+CORE_GHZ=2.864
+K1_SPREAD=0.000
+STATUS=ok
+plot written to results/crux.ece.ncsu.edu_cpu3_hp0_20261030-114717/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/crux/ex01_pipelined/results/crux.ece.ncsu.edu_cpu3_hp0_20261030-114717/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

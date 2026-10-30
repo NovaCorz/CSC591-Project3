@@ -1,0 +1,2 @@
+[artemisia] run ex01_pipelined label=cpu29 core=29 
+./run.sh: line 6: ../../common/run_lib.sh: No such file or directory

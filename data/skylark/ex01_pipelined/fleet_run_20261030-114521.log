@@ -1,0 +1,29 @@
+[skylark] run ex01_pipelined label=cpu2 core=2 
+== ex01_pipelined on CPU 2 (cpu2) ==
+core clock estimate (dependent register-add chain): 3.29 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          0.98       0.33
+2                  2.01              1.98              1.99          1.98       0.66
+3                  2.65              2.60              2.99          2.60       0.99
+4                  3.27              3.21              2.99          3.22       0.99
+5                  3.46              3.40              3.02          3.40       1.00
+6                  3.77              3.71              3.02          3.71       1.00
+8                  4.01              3.94              2.97          3.94       0.98
+12                 4.03              3.96              3.02          3.96       1.00
+
+add_reg: 4.0x speedup, saturating at K=6  -> machine sustains ~4.0 independent adds per cycle
+imul   : 3.0x speedup, saturating at K=3  -> dependent imul latency ~3.0 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 1.02x  (no special handling of immediate adds)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=3.02
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=3.02
+ADD_PEAK_IPC=4.03
+ADD_SATURATION_K=6
+ADD_IMM_FOLD_FACTOR=1.02
+CORE_GHZ=3.287
+K1_SPREAD=0.013
+STATUS=ok
+plot written to results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-114518/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/skylark/ex01_pipelined/results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-114518/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

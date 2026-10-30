@@ -1,0 +1,3 @@
+$ ../common/cpu_model.sh
+model name : 13th Gen Intel(R) Core(TM) i7-1370P
+architecture : x86_64

@@ -1,0 +1,2 @@
+$ uname -a
+Linux sunbird.ece.ncsu.edu 5.14.0-687.58.1.el9_8.x86_64 #1 SMP PREEMPT_DYNAMIC Wed Oct 14 01:16:38 EDT 2026 x86_64 x86_64 x86_64 GNU/Linux

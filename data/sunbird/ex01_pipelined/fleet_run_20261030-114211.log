@@ -1,0 +1,2 @@
+[sunbird] run ex01_pipelined label=cpu8 core=8 
+./run.sh: line 6: ../../common/run_lib.sh: No such file or directory

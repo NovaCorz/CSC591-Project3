@@ -1,0 +1,61 @@
+[descent] run ex02_ooo label=pcore core=0 
+== ex02_ooo on CPU 0 (pcore) ==
+core clock estimate: 4.99 GHz   |   miss latency (F=0): 99.1 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0                99.1ns              99.1ns          -0.0ns
+   32                99.0ns             104.1ns           5.1ns
+   64                99.1ns             111.1ns          12.0ns
+   96                99.2ns             117.4ns          18.2ns
+  128                99.1ns             123.5ns          24.4ns
+  160                99.1ns             129.5ns          30.4ns
+  192                98.6ns             135.7ns          37.1ns
+  224                98.7ns             140.6ns          41.9ns
+  256               106.4ns             146.6ns          40.2ns
+  288               113.5ns             155.0ns          41.6ns
+  320               119.4ns             164.9ns          45.5ns
+
+dependent filler: 0.197 ns per filler = 0.98 cycles each (regression over all F)  -> at F=128 it adds 25.2 ns,
+                  independent filler adds 0.1 ns  ->  100% of the filler work was hidden under the miss
+independent curve starts rising at F = 272   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=99.1
+DEP_COST_NS=25.2
+INDEP_COST_NS=0.1
+DEP_CYCLES_PER_FILLER=0.98
+INDEP_RISE_F=272
+CORE_GHZ=4.985
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_pcore_hp0_20261030-115612/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/descent/ex02_ooo/results/descent.ece.ncsu.edu_pcore_hp0_20261030-115612/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
+REMINDER: hybrid CPU. Still to do: the ecore run.
+[descent] run ex02_ooo label=ecore core=19 
+== ex02_ooo on CPU 19 (ecore) ==
+core clock estimate: 3.88 GHz   |   miss latency (F=0): 110.7 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0               110.7ns             110.0ns          -0.7ns
+   32               109.9ns             117.7ns           7.8ns
+   64               110.0ns             126.1ns          16.1ns
+   96               109.8ns             133.3ns          23.5ns
+  128               110.1ns             141.2ns          31.0ns
+  160               110.2ns             148.3ns          38.1ns
+  192               114.2ns             160.7ns          46.5ns
+  224               120.8ns             172.0ns          51.2ns
+  256               128.3ns             179.3ns          51.1ns
+  288               136.0ns             186.5ns          50.5ns
+  320               143.3ns             193.6ns          50.3ns
+
+dependent filler: 0.271 ns per filler = 1.05 cycles each (regression over all F)  -> at F=128 it adds 34.7 ns,
+                  independent filler adds -0.1 ns  ->  100% of the filler work was hidden under the miss
+independent curve starts rising at F = 240   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=110.7
+DEP_COST_NS=34.7
+INDEP_COST_NS=-0.1
+DEP_CYCLES_PER_FILLER=1.05
+INDEP_RISE_F=240
+CORE_GHZ=3.877
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_ecore_hp0_20261030-115614/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/descent/ex02_ooo/results/descent.ece.ncsu.edu_ecore_hp0_20261030-115614/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

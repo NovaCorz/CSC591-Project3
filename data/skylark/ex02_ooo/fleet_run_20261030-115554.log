@@ -1,0 +1,30 @@
+[skylark] run ex02_ooo label=cpu2 core=2 
+== ex02_ooo on CPU 2 (cpu2) ==
+core clock estimate: 3.29 GHz   |   miss latency (F=0): 135.6 ns
+    F    independent filler    dependent filler   hidden by OoO
+    0               135.6ns             134.7ns          -0.9ns
+   32               134.7ns             144.3ns           9.6ns
+   64               135.0ns             154.6ns          19.6ns
+   96               135.0ns             163.8ns          28.8ns
+  128               135.2ns             174.4ns          39.2ns
+  160               143.8ns             183.5ns          39.7ns
+  192               154.2ns             193.9ns          39.8ns
+  224               163.3ns             202.8ns          39.5ns
+  256               173.9ns             214.4ns          40.5ns
+  288               183.0ns             223.1ns          40.1ns
+  320               193.5ns             232.8ns          39.3ns
+
+dependent filler: 0.307 ns per filler = 1.01 cycles each (regression over all F)  -> at F=128 it adds 39.3 ns,
+                  independent filler adds 2.7 ns  ->  93% of the filler work was hidden under the miss
+independent curve starts rising at F = 192   (compare with the ROB size from ex04)
+OUT_OF_ORDER=yes
+MISS_LATENCY_NS=135.6
+DEP_COST_NS=39.3
+INDEP_COST_NS=2.7
+DEP_CYCLES_PER_FILLER=1.01
+INDEP_RISE_F=192
+CORE_GHZ=3.288
+STATUS=ok
+plot written to results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-115551/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/skylark/ex02_ooo/results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-115551/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

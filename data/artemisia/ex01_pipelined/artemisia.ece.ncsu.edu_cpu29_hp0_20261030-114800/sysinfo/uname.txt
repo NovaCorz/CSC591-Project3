@@ -1,0 +1,2 @@
+$ uname -a
+Linux artemisia.ece.ncsu.edu 6.17.8-1.el9.elrepo.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Nov 13 18:02:25 EST 2025 x86_64 x86_64 x86_64 GNU/Linux

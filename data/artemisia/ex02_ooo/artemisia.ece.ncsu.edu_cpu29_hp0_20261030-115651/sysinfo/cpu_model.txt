@@ -1,0 +1,3 @@
+$ ../common/cpu_model.sh
+model name : Intel(R) Xeon(R) Gold 5420+
+architecture : x86_64

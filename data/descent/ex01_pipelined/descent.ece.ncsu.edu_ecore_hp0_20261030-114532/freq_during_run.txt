@@ -1,0 +1,21 @@
+cpu0 gov=powersave min=400000 max=5000000 cur=400000
+cpu1 gov=powersave min=400000 max=5000000 cur=400000
+cpu10 gov=powersave min=400000 max=5000000 cur=400000
+cpu11 gov=powersave min=400000 max=5000000 cur=400000
+cpu12 gov=powersave min=400000 max=3900000 cur=1855066
+cpu13 gov=powersave min=400000 max=3900000 cur=2030659
+cpu14 gov=powersave min=400000 max=3900000 cur=1892919
+cpu15 gov=powersave min=400000 max=3900000 cur=2100368
+cpu16 gov=powersave min=400000 max=3900000 cur=1939436
+cpu17 gov=powersave min=400000 max=3900000 cur=2100472
+cpu18 gov=powersave min=400000 max=3900000 cur=2193070
+cpu19 gov=powersave min=400000 max=3900000 cur=593652
+cpu2 gov=powersave min=400000 max=5000000 cur=726597
+cpu3 gov=powersave min=400000 max=5000000 cur=400000
+cpu4 gov=powersave min=400000 max=5200000 cur=687580
+cpu5 gov=powersave min=400000 max=5200000 cur=1793658
+cpu6 gov=powersave min=400000 max=5200000 cur=690063
+cpu7 gov=powersave min=400000 max=5200000 cur=400000
+cpu8 gov=powersave min=400000 max=5000000 cur=400451
+cpu9 gov=powersave min=400000 max=5000000 cur=400000
+intel_pstate no_turbo=0

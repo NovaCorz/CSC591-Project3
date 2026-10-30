@@ -1,0 +1,21 @@
+$ bash -c for c in /sys/devices/system/cpu/cpu[0-9]*; do echo "$(basename $c): $(cat $c/topology/thread_siblings_list)"; done
+cpu0: 0-1
+cpu1: 0-1
+cpu10: 10-11
+cpu11: 10-11
+cpu12: 12
+cpu13: 13
+cpu14: 14
+cpu15: 15
+cpu16: 16
+cpu17: 17
+cpu18: 18
+cpu19: 19
+cpu2: 2-3
+cpu3: 2-3
+cpu4: 4-5
+cpu5: 4-5
+cpu6: 6-7
+cpu7: 6-7
+cpu8: 8-9
+cpu9: 8-9

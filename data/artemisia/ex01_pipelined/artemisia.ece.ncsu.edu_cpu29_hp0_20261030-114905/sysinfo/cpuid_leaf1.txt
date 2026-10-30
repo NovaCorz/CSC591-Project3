@@ -1,0 +1,24 @@
+$ bash -c cpuid -1 -l 1 -r; cpuid -1 | grep -iE 'family|model|stepping|synth|(uarch)'
+CPU:
+   0x00000001 0x00: eax=0x000806f8 ebx=0x00800800 ecx=0x7ffefbf7 edx=0xbfebfbff
+      family          = 0x6 (6)
+      model           = 0xf (15)
+      stepping id     = 0x8 (8)
+      extended family = 0x0 (0)
+      extended model  = 0x8 (8)
+      (family synth)  = 0x6 (6)
+      (model synth)   = 0x8f (143)
+      (size synth)                       = 49152 (48 KB)
+      (size synth)                       = 32768 (32 KB)
+      (size synth)                       = 2097152 (2 MB)
+      (size synth)                       = 55050240 (52.5 MB)
+      (QoS monitoring counter size synth)         = 32
+      stepping id = 0x00000000 (0)
+   Native Model ID Information (0x1a/0):
+      native model ID of core = 0x0 (0)
+      (vuln to branch type confusion synth)    = true
+   (multi-processing synth) = multi-core (c=28), hyper-threaded (t=2)
+   (APIC widths synth): CORE_width=6 SMT_width=1
+   (APIC synth): PKG_ID=0 CORE_ID=4 SMT_ID=1
+   (uarch synth) = Intel Sapphire Rapids {Golden Cove}, Intel 7
+   (synth) = Intel Xeon Scalable (4th Gen) Bronze/Silver/Gold/Platinum (Sapphire Rapids E5/B3/S3) {Golden Cove}, Intel 7

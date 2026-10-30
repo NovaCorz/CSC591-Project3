@@ -1,0 +1,25 @@
+core clock estimate (dependent register-add chain): 3.72 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          1.10       0.37
+2                  1.96              1.94              2.00          2.15       0.75
+3                  2.49              2.44              3.01          2.73       1.12
+4                  3.49              3.41              3.00          3.83       1.12
+5                  3.59              3.51              2.98          3.94       1.11
+6                  3.96              3.87              2.94          4.35       1.10
+8                  4.06              3.97              3.01          4.46       1.12
+12                 4.07              3.98              3.01          4.47       1.12
+
+add_reg: 4.1x speedup, saturating at K=6  -> machine sustains ~4.1 independent adds per cycle
+imul   : 3.0x speedup, saturating at K=3  -> dependent imul latency ~2.7 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 1.02x  (no special handling of immediate adds)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=3.01
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=2.68
+ADD_PEAK_IPC=4.07
+ADD_SATURATION_K=6
+ADD_IMM_FOLD_FACTOR=1.02
+CORE_GHZ=3.723
+K1_SPREAD=0.029
+STATUS=ok
+plot written to results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-114512/plot.png

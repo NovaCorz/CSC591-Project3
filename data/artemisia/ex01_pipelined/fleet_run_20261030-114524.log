@@ -1,0 +1,29 @@
+[artemisia] run ex01_pipelined label=cpu29 core=29 
+== ex01_pipelined on CPU 29 (cpu29) ==
+core clock estimate (dependent register-add chain): 2.65 GHz
+K       add_reg speedup   add_imm speedup      imul speedup   add_reg IPC   imul IPC
+1                  1.00              1.00              1.00          1.00       0.34
+2                  1.94              1.10              1.99          1.95       0.67
+3                  2.79              1.09              2.79          2.79       0.94
+4                  2.97              1.13              2.80          2.98       0.94
+5                  3.08              1.12              2.80          3.08       0.94
+6                  3.03              1.10              2.80          3.03       0.94
+8                  3.04              1.08              2.80          3.04       0.94
+12                 3.01              1.09              2.79          3.01       0.93
+
+add_reg: 3.1x speedup, saturating at K=3  -> machine sustains ~3.1 independent adds per cycle
+imul   : 2.8x speedup, saturating at K=3  -> dependent imul latency ~3.0 cycles, issue rate ~1/cycle
+add_imm vs add_reg at K=1: 2.85x  (immediate adds are folded/accelerated at rename)
+PIPELINED=yes
+IMUL_SPEEDUP_MAX=2.80
+IMUL_SATURATION_K=3
+IMUL_LATENCY_CYCLES=2.98
+ADD_PEAK_IPC=3.08
+ADD_SATURATION_K=3
+ADD_IMM_FOLD_FACTOR=2.85
+CORE_GHZ=2.655
+K1_SPREAD=0.018
+STATUS=ok
+plot written to results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-114521/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/artemisia/ex01_pipelined/results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-114521/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

@@ -1,0 +1,4 @@
+[elevation] run ex01_pipelined label=pcore core=0 
+../common/run_lib.sh: line 36: ../common/gather_info.sh: Permission denied
+[elevation] run ex01_pipelined label=ecore core=11 
+../common/run_lib.sh: line 36: ../common/gather_info.sh: Permission denied
