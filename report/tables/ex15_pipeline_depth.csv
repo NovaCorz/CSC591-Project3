@@ -1,0 +1,11 @@
+machine,cpu_model,environment,core_label,runs,penalty_cycles_median,penalty_min,penalty_max,two_point_cycles_median,core_ghz
+artemisia,Intel(R) Xeon(R) Gold 5420+,native,cpu29,3,24.2,24.0,29.2,24.3,2.69
+charnwood,Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz,native,cpu2,3,19.1,17.1,19.7,17.9,2.94
+crux,Intel(R) Core(TM) i7-9700 CPU @ 3.00GHz,native,cpu3,3,15.0,14.6,15.6,14.0,2.83
+descent,13th Gen Intel(R) Core(TM) i7-1370P,native,ecore,3,25.6,25.6,25.7,25.3,3.68
+descent,13th Gen Intel(R) Core(TM) i7-1370P,native,pcore,3,25.5,25.5,26.2,25.1,4.86
+elevation,12th Gen Intel(R) Core(TM) i5-1235U,native,ecore,3,27.0,27.0,27.1,26.7,3.28
+elevation,12th Gen Intel(R) Core(TM) i5-1235U,native,pcore,3,26.3,26.3,26.5,25.9,4.37
+ookay,Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz,native,cpu2,3,16.4,16.4,22.1,15.3,2.78
+skylark,AMD EPYC 7532 32-Core Processor,native,cpu2,3,25.2,25.2,25.2,24.0,3.28
+sunbird,Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz,native,cpu8,3,20.0,19.9,20.0,19.4,2.3
