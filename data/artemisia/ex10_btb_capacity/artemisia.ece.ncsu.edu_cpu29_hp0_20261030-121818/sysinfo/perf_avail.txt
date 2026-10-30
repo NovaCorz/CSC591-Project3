@@ -1,0 +1,3 @@
+$ bash -c command -v perf || echo "perf not installed"; cat /proc/sys/kernel/perf_event_paranoid
+/usr/bin/perf
+2

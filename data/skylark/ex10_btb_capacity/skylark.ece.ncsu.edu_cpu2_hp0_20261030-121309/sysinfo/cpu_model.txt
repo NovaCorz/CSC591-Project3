@@ -1,0 +1,3 @@
+$ ../common/cpu_model.sh
+model name : AMD EPYC 7532 32-Core Processor
+architecture : x86_64

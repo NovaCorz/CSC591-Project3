@@ -1,0 +1,56 @@
+core clock estimate: 3.42 GHz   (1 cycle = 0.292 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     1.73     1.82     1.32     0.82     0.82
+    12     1.90     1.68     1.35     0.82     0.82
+    16     1.79     1.76     1.38     0.82     0.82
+    24     1.94     1.79     1.40     0.82     0.82
+    32     1.74     1.80     1.40     0.82     0.82
+    48     1.81     1.82     1.41     0.82     0.82
+    64     1.86     1.83     1.42     0.82     0.83
+    96     2.12     1.83     1.42     0.82     1.34
+   128     1.97     1.84     1.43     0.83     1.56
+   192     1.87     1.84     1.43     1.35     1.64
+   256     2.05     1.84     1.43     1.60     1.64
+   384     2.34     1.84     1.57     1.64     1.64
+   512     2.07     1.84     1.64     1.64     1.64
+   768     1.87     1.71     1.64     1.64     3.18
+  1024     2.06     1.64     1.64     1.64     3.27
+  1536     1.92     1.64     1.64     1.64     3.28
+  2048     1.99     1.64     1.64     1.64     3.37
+  3072     1.92     1.77     1.64     2.00     7.48
+  4096     1.92     1.85     1.66     2.02     7.64
+  6144     4.88     7.38     7.40     7.40     7.78
+  8192     6.98     7.40     7.40     7.40     7.91
+ 12288     7.40     7.39     7.39     7.40     8.54
+ 16384     7.40     7.40     7.40     7.43     8.60
+ 24576     7.39     7.39     7.39     7.76     8.53
+ 32768     7.40     7.40     7.41     7.77     8.58
+
+S=4   steps at N = 256 (x1.35), 4096 (x2.08), 6144 (x1.43)
+S=8   steps at N = 4096 (x4.04)
+S=16  steps at N = 3072 (x1.25), 4096 (x4.46)
+S=32  steps at N = 128 (x1.65), 2048 (x1.48), 4096 (x3.70)
+S=64  steps at N = 64 (x1.63), 512 (x2.37), 2048 (x2.35)
+
+first plateau (small N, S=16): 1.32 cycles per taken branch;  last plateau (N=32768): ~7.4 cycles
+largest big step (>=1.5x) at N ~ 4096 branches and it is at about the same N for every spacing 4..32 -> a BTB capacity
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=256,4096,6144
+LAST_BIG_KNEE_S4=4096
+KNEES_S8=4096
+LAST_BIG_KNEE_S8=4096
+KNEES_S16=3072,4096
+LAST_BIG_KNEE_S16=4096
+KNEES_S32=128,2048,4096
+LAST_BIG_KNEE_S32=4096
+KNEES_S64=64,512,2048
+LAST_BIG_KNEE_S64=2048
+BTB_CAPACITY_EST=4096
+BTB_AGREE_ACROSS_S=yes
+BASE_CYCLES_PER_BRANCH=1.32
+FAR_CYCLES_PER_BRANCH=7.4
+CORE_GHZ=3.424
+STATUS=ok
+plot written to results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-121229/plot.png

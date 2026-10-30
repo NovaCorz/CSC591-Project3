@@ -1,0 +1,60 @@
+[charnwood] run ex10_btb_capacity label=cpu2 core=2 
+== ex10_btb_capacity on CPU 2 (cpu2) ==
+core clock estimate: 3.68 GHz   (1 cycle = 0.271 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     2.06     2.16     1.57     0.97     0.97
+    12     2.25     1.99     1.60     0.97     0.97
+    16     2.13     2.11     1.63     0.97     0.97
+    24     2.29     2.12     1.65     0.97     0.97
+    32     2.13     2.14     1.67     0.97     0.97
+    48     2.24     2.16     1.68     0.97     0.97
+    64     2.27     2.17     1.67     0.97     0.99
+    96     2.16     2.18     1.69     0.97     1.60
+   128     2.28     2.17     1.70     0.98     1.87
+   192     2.52     2.18     1.69     1.61     1.95
+   256     2.30     2.19     1.70     1.90     1.95
+   384     2.18     2.19     1.86     1.95     1.95
+   512     2.47     2.19     1.95     1.95     1.95
+   768     2.49     2.03     1.95     1.95     3.78
+  1024     2.28     1.95     1.95     1.95     3.87
+  1536     2.44     1.95     1.95     1.95     3.90
+  2048     2.27     1.95     1.95     1.95     3.91
+  3072     2.29     2.09     1.95     2.38     9.01
+  4096     2.27     2.22     1.97     2.62     9.03
+  6144     5.85     8.78     8.78     8.78     9.17
+  8192     8.37     8.78     8.78     8.79     9.41
+ 12288     8.78     8.78     8.78     8.79    10.15
+ 16384     8.78     8.78     8.78     8.81    10.27
+ 24576     8.78     8.78     8.78     9.21    10.18
+ 32768     8.78     8.78     8.80     9.22    10.22
+
+S=4   steps at N = 4096 (x2.84), 6144 (x1.43)
+S=8   steps at N = 4096 (x4.06)
+S=16  steps at N = 3072 (x1.26), 4096 (x4.46)
+S=32  steps at N = 128 (x1.66), 2048 (x1.47), 4096 (x3.69)
+S=64  steps at N = 64 (x1.64), 512 (x2.36), 2048 (x2.38)
+
+first plateau (small N, S=16): 1.57 cycles per taken branch;  last plateau (N=32768): ~8.8 cycles
+largest big step (>=1.5x) at N ~ 4096 branches and it is at about the same N for every spacing 4..32 -> a BTB capacity
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=4096,6144
+LAST_BIG_KNEE_S4=4096
+KNEES_S8=4096
+LAST_BIG_KNEE_S8=4096
+KNEES_S16=3072,4096
+LAST_BIG_KNEE_S16=4096
+KNEES_S32=128,2048,4096
+LAST_BIG_KNEE_S32=4096
+KNEES_S64=64,512,2048
+LAST_BIG_KNEE_S64=2048
+BTB_CAPACITY_EST=4096
+BTB_AGREE_ACROSS_S=yes
+BASE_CYCLES_PER_BRANCH=1.57
+FAR_CYCLES_PER_BRANCH=8.8
+CORE_GHZ=3.684
+STATUS=ok
+plot written to results/charnwood.ece.ncsu.edu_cpu2_hp0_20261030-122119/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/charnwood/ex10_btb_capacity/results/charnwood.ece.ncsu.edu_cpu2_hp0_20261030-122119/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

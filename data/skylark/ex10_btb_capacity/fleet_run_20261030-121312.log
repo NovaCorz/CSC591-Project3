@@ -1,0 +1,60 @@
+[skylark] run ex10_btb_capacity label=cpu2 core=2 
+== ex10_btb_capacity on CPU 2 (cpu2) ==
+core clock estimate: 3.29 GHz   (1 cycle = 0.304 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     1.02     1.00     1.00     1.00     1.00
+    12     1.01     1.00     1.01     1.00     1.00
+    16     1.06     1.07     1.08     1.06     1.06
+    24     1.35     1.36     1.35     1.35     1.35
+    32     1.52     1.50     1.51     1.57     1.50
+    48     2.05     2.01     2.01     2.08     3.70
+    64     2.02     2.01     2.04     2.00     4.70
+    96     2.01     2.02     2.03     3.88     3.77
+   128     2.01     2.01     2.00     4.71     4.62
+   192     2.02     2.00     4.08     3.86     4.57
+   256     2.03     2.00     4.75     4.65     4.65
+   384     3.85     4.19     3.88     4.70     4.65
+   512     4.78     4.76     4.75     4.70     4.66
+   768     4.89     4.90     4.87     4.85     5.50
+  1024     4.92     4.93     4.93     4.91     4.89
+  1536     4.96     4.96     4.96     4.94     5.34
+  2048     4.96     4.97     4.98     4.96     4.96
+  3072     4.99     4.98     4.97     5.08     5.21
+  4096     4.99     4.99     4.99     5.01     5.05
+  6144    14.40    14.92    14.77    14.64    15.03
+  8192    15.03    14.82    14.99    14.99    15.03
+ 12288    14.88    14.92    14.88    15.05    15.06
+ 16384    14.97    15.05    15.03    15.04    15.19
+ 24576    14.94    14.99    15.05    15.11    15.28
+ 32768    14.99    15.05    15.07    15.08    15.25
+
+S=4   steps at N = 16 (x1.33), 32 (x1.53), 256 (x1.87), 512 (x1.27), 4096 (x2.94)
+S=8   steps at N = 16 (x1.36), 32 (x1.48), 256 (x2.09), 4096 (x3.56)
+S=16  steps at N = 16 (x1.35), 32 (x1.50), 128 (x2.03), 4096 (x3.62)
+S=32  steps at N = 16 (x1.35), 32 (x1.54), 64 (x1.87), 768 (x1.26), 4096 (x2.98)
+S=64  steps at N = 16 (x1.35), 32 (x2.74), 192 (x1.26), 4096 (x3.23)
+
+first plateau (small N, S=16): 1.00 cycles per taken branch;  last plateau (N=32768): ~15.1 cycles
+largest big step (>=1.5x) at N ~ 4096 branches and it is at about the same N for every spacing 4..32 -> a BTB capacity
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=16,32,256,512,4096
+LAST_BIG_KNEE_S4=4096
+KNEES_S8=16,32,256,4096
+LAST_BIG_KNEE_S8=4096
+KNEES_S16=16,32,128,4096
+LAST_BIG_KNEE_S16=4096
+KNEES_S32=16,32,64,768,4096
+LAST_BIG_KNEE_S32=4096
+KNEES_S64=16,32,192,4096
+LAST_BIG_KNEE_S64=4096
+BTB_CAPACITY_EST=4096
+BTB_AGREE_ACROSS_S=yes
+BASE_CYCLES_PER_BRANCH=1.00
+FAR_CYCLES_PER_BRANCH=15.1
+CORE_GHZ=3.286
+STATUS=ok
+plot written to results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-121309/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/skylark/ex10_btb_capacity/results/skylark.ece.ncsu.edu_cpu2_hp0_20261030-121309/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

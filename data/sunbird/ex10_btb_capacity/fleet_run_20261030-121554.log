@@ -1,0 +1,60 @@
+[sunbird] run ex10_btb_capacity label=cpu8 core=8 
+== ex10_btb_capacity on CPU 8 (cpu8) ==
+core clock estimate: 2.46 GHz   (1 cycle = 0.407 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     2.19     2.03     0.99     0.99     0.99
+    12     2.01     2.05     0.99     1.48     0.99
+    16     2.16     2.09     0.99     1.48     0.99
+    24     2.15     2.12     0.99     1.48     0.99
+    32     2.17     2.14     0.99     1.49     1.02
+    48     2.18     2.17     0.99     1.48     1.61
+    64     2.19     2.18     0.99     1.23     1.88
+    96     2.20     2.19     0.99     1.64     1.97
+   128     2.19     2.19     1.00     1.94     1.97
+   192     2.21     2.20     1.63     1.97     1.97
+   256     2.20     2.20     1.95     1.97     1.97
+   384     2.21     2.13     1.97     1.97     1.97
+   512     2.21     2.09     1.97     1.97     1.97
+   768     2.14     2.09     1.97     1.97     3.97
+  1024     2.10     2.09     1.97     1.97     3.98
+  1536     2.10     2.10     1.97     2.50    11.90
+  2048     2.10     2.10     1.97     2.56    11.91
+  3072     2.38     2.10     2.20    11.89    11.96
+  4096     2.50     2.12     2.24    11.88    13.13
+  6144    11.85    11.87    11.88    11.95    14.22
+  8192    11.86    11.87    11.87    11.94    14.52
+ 12288    11.86    11.87    11.88    12.14    14.49
+ 16384    11.86    11.87    11.89    11.93    14.51
+ 24576    11.86    11.87    11.89    12.40    14.53
+ 32768    11.87    11.88    11.91    12.38    14.54
+
+S=4   steps at N = 4096 (x5.41)
+S=8   steps at N = 4096 (x5.86)
+S=16  steps at N = 128 (x1.65), 2048 (x1.35), 4096 (x5.40)
+S=32  steps at N = 8 (x1.50), 96 (x1.31), 1024 (x1.29), 2048 (x4.76)
+S=64  steps at N = 32 (x1.64), 512 (x2.46), 1024 (x2.99)
+
+first plateau (small N, S=16): 0.99 cycles per taken branch;  last plateau (N=32768): ~11.9 cycles
+largest big step (>=1.5x) at N ~ 4096 branches but it moves with the spacing -> not a pure BTB capacity (cache/ITLB/set mapping effects); report per spacing
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=4096
+LAST_BIG_KNEE_S4=4096
+KNEES_S8=4096
+LAST_BIG_KNEE_S8=4096
+KNEES_S16=128,2048,4096
+LAST_BIG_KNEE_S16=4096
+KNEES_S32=8,96,1024,2048
+LAST_BIG_KNEE_S32=2048
+KNEES_S64=32,512,1024
+LAST_BIG_KNEE_S64=1024
+BTB_CAPACITY_EST=4096
+BTB_AGREE_ACROSS_S=no
+BASE_CYCLES_PER_BRANCH=0.99
+FAR_CYCLES_PER_BRANCH=11.9
+CORE_GHZ=2.459
+STATUS=ok
+plot written to results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-121551/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/sunbird/ex10_btb_capacity/results/sunbird.ece.ncsu.edu_cpu8_hp0_20261030-121551/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

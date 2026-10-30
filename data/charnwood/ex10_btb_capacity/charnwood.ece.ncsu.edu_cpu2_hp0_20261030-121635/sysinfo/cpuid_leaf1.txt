@@ -1,0 +1,21 @@
+$ bash -c cpuid -1 -l 1 -r; cpuid -1 | grep -iE 'family|model|stepping|synth|(uarch)'
+CPU:
+   0x00000001 0x00: eax=0x000506e3 ebx=0x00100800 ecx=0x7ffafbff edx=0xbfebfbff
+      family          = 0x6 (6)
+      model           = 0xe (14)
+      stepping id     = 0x3 (3)
+      extended family = 0x0 (0)
+      extended model  = 0x5 (5)
+      (family synth)  = 0x6 (6)
+      (model synth)   = 0x5e (94)
+      (size synth)                       = 32768 (32 KB)
+      (size synth)                       = 32768 (32 KB)
+      (size synth)                       = 262144 (256 KB)
+      (size synth)                       = 8388608 (8 MB)
+      (vuln to branch type confusion synth)    = true
+   (instruction supported synth):
+   (multi-processing synth) = multi-core (c=4), hyper-threaded (t=2)
+   (APIC widths synth): CORE_width=3 SMT_width=1
+   (APIC synth): PKG_ID=0 CORE_ID=3 SMT_ID=1
+   (uarch synth) = Intel Skylake {Skylake}, 14nm
+   (synth) = Intel Core i*-6000 (Skylake-H/S/E3 R0/N0/S0) {Skylake}, 14nm

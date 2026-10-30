@@ -1,0 +1,56 @@
+core clock estimate: 4.96 GHz   (1 cycle = 0.202 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     4.15     1.58     0.33     0.33     0.33
+    12     3.75     1.49     0.36     0.38     0.38
+    16     4.40     1.61     0.35     0.35     0.35
+    24     4.24     1.61     0.36     0.36     0.36
+    32     4.34     1.62     0.33     0.33     0.33
+    48     4.41     1.62     0.98     0.82     0.77
+    64     4.43     1.64     1.11     0.80     0.79
+    96     4.42     1.64     0.90     0.81     0.87
+   128     4.51     1.64     0.94     0.82     0.85
+   192     4.49     1.64     0.97     0.96     0.90
+   256     4.47     1.64     1.09     1.11     1.03
+   384     4.48     1.63     1.45     1.53     2.31
+   512     4.46     1.64     1.64     1.63     2.91
+   768     4.48     1.77     1.75     2.12     3.89
+  1024     4.48     1.82     1.81     2.48     3.96
+  1536     4.59     1.87     2.10     2.43     3.97
+  2048     4.65     1.90     2.17     2.46     3.97
+  3072     4.69     2.04     2.18     2.44     3.97
+  4096     4.69     2.07     2.18     2.45     3.98
+  6144     4.70     3.31     2.16     2.36     4.00
+  8192     4.71     3.94     3.62     2.74     6.73
+ 12288     5.96     4.39     3.90     3.06    12.89
+ 16384     6.63     6.65     6.69     6.71    13.00
+ 24576    10.31    12.90    12.88    12.91    13.92
+ 32768    12.90    12.90    12.91    12.96    14.24
+
+S=4   steps at N = 8192 (x1.43), 16384 (x1.73), 24576 (x1.25)
+S=8   steps at N = 2048 (x1.29), 4096 (x1.62), 8192 (x1.33), 12288 (x1.51), 16384 (x1.94)
+S=16  steps at N = 32 (x2.93), 256 (x1.48), 1024 (x1.45), 6144 (x1.72), 12288 (x1.85), 16384 (x1.93)
+S=32  steps at N = 32 (x2.44), 192 (x1.37), 256 (x1.38), 512 (x1.38), 6144 (x1.29), 12288 (x2.45), 16384 (x1.92)
+S=64  steps at N = 32 (x2.32), 192 (x1.34), 256 (x2.24), 384 (x1.26), 512 (x1.34), 6144 (x1.73), 8192 (x1.92)
+
+first plateau (small N, S=16): 0.33 cycles per taken branch;  last plateau (N=32768): ~12.9 cycles
+largest big step (>=1.5x) at N ~ 16384 branches and it is at about the same N for every spacing 4..32 -> a BTB capacity
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=8192,16384,24576
+LAST_BIG_KNEE_S4=16384
+KNEES_S8=2048,4096,8192,12288,16384
+LAST_BIG_KNEE_S8=16384
+KNEES_S16=32,256,1024,6144,12288,16384
+LAST_BIG_KNEE_S16=16384
+KNEES_S32=32,192,256,512,6144,12288,16384
+LAST_BIG_KNEE_S32=16384
+KNEES_S64=32,192,256,384,512,6144,8192
+LAST_BIG_KNEE_S64=8192
+BTB_CAPACITY_EST=16384
+BTB_AGREE_ACROSS_S=yes
+BASE_CYCLES_PER_BRANCH=0.33
+FAR_CYCLES_PER_BRANCH=12.9
+CORE_GHZ=4.955
+STATUS=ok
+plot written to results/descent.ece.ncsu.edu_pcore_hp0_20261030-121508/plot.png

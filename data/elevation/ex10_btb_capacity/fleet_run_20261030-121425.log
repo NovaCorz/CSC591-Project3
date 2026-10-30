@@ -1,0 +1,121 @@
+[elevation] run ex10_btb_capacity label=pcore core=0 
+== ex10_btb_capacity on CPU 0 (pcore) ==
+core clock estimate: 4.31 GHz   (1 cycle = 0.232 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     4.11     1.86     0.33     0.33     0.34
+    12     3.93     1.97     0.38     0.38     0.36
+    16     4.54     1.91     0.35     0.35     0.35
+    24     4.37     1.93     0.35     0.35     0.35
+    32     4.53     1.94     0.33     0.33     0.33
+    48     4.56     1.93     1.90     1.42     0.78
+    64     4.55     1.95     1.89     1.43     1.00
+    96     4.54     1.92     1.92     1.45     1.40
+   128     4.49     1.96     1.93     1.46     1.67
+   192     4.48     1.96     1.94     1.79     1.75
+   256     4.45     1.96     1.95     1.94     1.54
+   384     4.46     1.94     1.96     1.92     1.99
+   512     4.46     1.97     1.94     1.87     2.19
+   768     4.45     1.96     1.92     1.96     3.83
+  1024     4.45     1.94     1.88     2.08     3.91
+  1536     4.55     1.91     1.96     2.07     3.92
+  2048     4.60     1.94     2.02     2.08     3.93
+  3072     4.64     1.99     2.03     2.02     3.93
+  4096     4.64     2.00     2.05     2.08     3.94
+  6144     4.65     3.27     2.07     2.07     3.95
+  8192     4.66     3.90     3.57     2.65     6.64
+ 12288     5.88     4.34     3.84     3.02    12.91
+ 16384     6.54     6.56     6.59     6.61    12.94
+ 24576    10.18    12.76    12.79    12.84    13.71
+ 32768    12.77    12.77    12.79    12.87    14.04
+
+S=4   steps at N = 8192 (x1.43), 16384 (x1.73), 24576 (x1.25)
+S=8   steps at N = 4096 (x1.76), 8192 (x1.33), 12288 (x1.51), 16384 (x1.95)
+S=16  steps at N = 32 (x5.69), 6144 (x1.89), 12288 (x1.84), 16384 (x1.94)
+S=32  steps at N = 32 (x4.27), 128 (x1.26), 6144 (x1.48), 12288 (x2.49), 16384 (x1.94)
+S=64  steps at N = 32 (x2.32), 48 (x1.29), 64 (x1.39), 256 (x1.42), 512 (x1.93), 6144 (x1.73), 8192 (x1.95)
+
+first plateau (small N, S=16): 0.33 cycles per taken branch;  last plateau (N=32768): ~12.8 cycles
+largest big step (>=1.5x) at N ~ 16384 branches and it is at about the same N for every spacing 4..32 -> a BTB capacity
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=8192,16384,24576
+LAST_BIG_KNEE_S4=16384
+KNEES_S8=4096,8192,12288,16384
+LAST_BIG_KNEE_S8=16384
+KNEES_S16=32,6144,12288,16384
+LAST_BIG_KNEE_S16=16384
+KNEES_S32=32,128,6144,12288,16384
+LAST_BIG_KNEE_S32=16384
+KNEES_S64=32,48,64,256,512,6144,8192
+LAST_BIG_KNEE_S64=8192
+BTB_CAPACITY_EST=16384
+BTB_AGREE_ACROSS_S=yes
+BASE_CYCLES_PER_BRANCH=0.33
+FAR_CYCLES_PER_BRANCH=12.8
+CORE_GHZ=4.307
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_pcore_hp0_20261030-121422/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex10_btb_capacity/results/elevation.ece.ncsu.edu_pcore_hp0_20261030-121422/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
+REMINDER: hybrid CPU. Still to do: the ecore run.
+[elevation] run ex10_btb_capacity label=ecore core=11 
+== ex10_btb_capacity on CPU 11 (ecore) ==
+core clock estimate: 3.28 GHz   (1 cycle = 0.305 ns)
+time per taken branch, in CYCLES (median of repetitions)
+     N   S=4      S=8      S=16     S=32     S=64  
+     8     5.43     1.00     1.00     1.00     1.00
+    12     4.55     1.00     1.00     1.00     1.00
+    16     6.24     1.03     1.00     1.00     1.00
+    24     6.45     1.01     1.00     1.00     1.00
+    32     6.49     1.02     1.00     1.00     1.00
+    48     6.53     1.00     1.00     1.00     1.00
+    64     6.55     1.01     1.00     1.00     1.00
+    96     6.57     1.00     1.00     1.00     1.00
+   128     6.58     1.02     1.00     1.00     1.00
+   192     6.58     1.01     1.00     1.00     1.00
+   256     6.59     1.00     1.00     1.00     1.00
+   384     6.60     1.01     1.00     1.00     1.00
+   512     6.61     1.00     1.00     1.00     1.01
+   768     6.60     1.00     1.00     1.00     1.75
+  1024     6.61     1.01     1.01     1.01     2.50
+  1536     6.61     1.76     1.67     1.75     3.28
+  2048     6.61     2.15     2.57     2.52     3.28
+  3072     6.62     3.00     2.84     3.16     8.57
+  4096     6.62     3.00     2.89     3.18    10.83
+  6144     6.62     6.14     7.04     7.19    12.55
+  8192     6.63     7.74     8.06     8.61    12.55
+ 12288     8.22     9.01     9.01     9.32    12.55
+ 16384     9.01     9.01     9.13     9.32    12.56
+ 24576     9.01     9.01     9.16     9.32    15.61
+ 32768     9.01     9.06     9.16     9.33    26.31
+
+S=4   steps at N = 8192 (x1.52)
+S=8   steps at N = 1024 (x1.77), 2048 (x1.70), 4096 (x2.05), 6144 (x1.26)
+S=16  steps at N = 1024 (x1.68), 1536 (x1.54), 4096 (x2.74), 8192 (x1.28)
+S=32  steps at N = 1024 (x1.75), 1536 (x1.44), 2048 (x1.25), 4096 (x2.28), 8192 (x1.30)
+S=64  steps at N = 512 (x1.75), 768 (x1.43), 1024 (x1.31), 2048 (x2.61), 3072 (x1.26), 16384 (x1.44), 24576 (x1.68)
+
+first plateau (small N, S=16): 1.00 cycles per taken branch;  last plateau (N=32768): ~9.2 cycles
+largest big step (>=1.5x) at N ~ 4096 branches but it moves with the spacing -> not a pure BTB capacity (cache/ITLB/set mapping effects); report per spacing
+steps at small N that DO move with S point at set-mapping limits or fetch-window limits; steps whose N is constant across
+S point at capacity. Compare with the published BTB size in the report (kept separate).
+KNEES_S4=8192
+LAST_BIG_KNEE_S4=8192
+KNEES_S8=1024,2048,4096,6144
+LAST_BIG_KNEE_S8=4096
+KNEES_S16=1024,1536,4096,8192
+LAST_BIG_KNEE_S16=4096
+KNEES_S32=1024,1536,2048,4096,8192
+LAST_BIG_KNEE_S32=4096
+KNEES_S64=512,768,1024,2048,3072,16384,24576
+LAST_BIG_KNEE_S64=24576
+BTB_CAPACITY_EST=4096
+BTB_AGREE_ACROSS_S=no
+BASE_CYCLES_PER_BRANCH=1.00
+FAR_CYCLES_PER_BRANCH=9.2
+CORE_GHZ=3.281
+STATUS=ok
+plot written to results/elevation.ece.ncsu.edu_ecore_hp0_20261030-121439/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/elevation/ex10_btb_capacity/results/elevation.ece.ncsu.edu_ecore_hp0_20261030-121439/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)
