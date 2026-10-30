@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# STUB: replace with the real entry point. Env: CORE LABEL (HP and tuning variables optional).
-echo "ex15_pipeline_depth: not implemented yet" >&2
-exit 2
+# ex15 is ANALYSIS ONLY (it reuses the ex03 data); there is nothing to run on a machine.
+echo "ex15_pipeline_depth: analysis only. On your own computer, after collecting ex03 data, run:"
+echo "    python3 exercises/ex15_pipeline_depth/analyze_ex15.py"
+exit 0

@@ -46,7 +46,9 @@ echo "$NAME: not implemented yet" >&2
 exit 2
 EOT
 cat > "$D/Makefile" <<EOT
-# STUB: build your code here (fleet.sh deploy runs 'make -B' on each machine). Suggested: output to bin/
+# STUB: build your code here (fleet.sh deploy runs 'make -B' on each machine).
+# common/ is ../common when deployed by fleet.sh and ../../common inside the repo tree:
+#   COMMON := \$(firstword \$(wildcard ../common ../../common))
 all:
 	@echo "$NAME: no code yet"
 EOT

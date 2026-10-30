@@ -7,19 +7,21 @@ Findings are established from **timing**; performance counters are only a labele
 
 > Keep this repository **private**: it contains homework code and measurements.
 
+**Start with [`docs/FULL_GUIDE.md`](docs/FULL_GUIDE.md)**: the complete walkthrough (commands, expected output, report, packaging) for every exercise. Run `bash scripts/verify_repo.sh` after copying new files.
+
 ## Status
 
 | Exercise | Pts | Native code | Enclave code | Data collected |
 |---|---|---|---|---|
-| ex01 pipelined | 10 | scaffold | scaffold | none |
-| ex02 ooo | 10 | scaffold | scaffold | none |
-| ex03 branch prediction | 10 | scaffold | scaffold | none |
-| ex04 ROB | 30 | **implemented** (tested only in a sandbox VM) | scaffold | none |
-| ex08 TLB miss cost | 10 | scaffold | scaffold | none |
-| ex10 BTB capacity | 20 | scaffold | scaffold | none |
-| ex15 pipeline depth | 10 | scaffold (analysis of ex03 data) | via ex03 enclave | none |
+| ex01 pipelined | 10 | **implemented** (x86-64, sandbox-tested) | scaffold | none |
+| ex02 ooo | 10 | **implemented** (x86-64, sandbox-tested) | scaffold | none |
+| ex03 branch prediction | 10 | **implemented** (x86-64, sandbox-tested) | scaffold | none |
+| ex04 ROB | 30 | **implemented**, x86-64 and AArch64 (x86 run on real machines; AArch64 only emulator-tested) | scaffold | first runs collected |
+| ex08 TLB miss cost | 10 | **implemented** (x86-64, sandbox-tested) | scaffold | none |
+| ex10 BTB capacity | 20 | **implemented** (x86-64, sandbox-tested) | scaffold | none |
+| ex15 pipeline depth | 10 | **implemented** (analysis of ex03 data) | via ex03 enclave | none |
 
-"Scaffold" = folder with README (planned method), `run.sh` stub and Makefile stub, ready for code. Update this table as you go.
+"Scaffold" = folder with README, `run.sh` stub and Makefile stub, no code (the enclave variants: nothing written or tested). "Sandbox-tested" = run only in a virtual machine here, not yet on your machines. Update this table as you go.
 
 ## Repository layout
 
@@ -28,34 +30,41 @@ hw3/
 ├── common/
 │   ├── include/
 │   │   └── bench_common.h
+│   ├── analysis_util.py
+│   ├── cpu_model.sh
 │   ├── freq_ctl.sh
-│   └── gather_info.sh
+│   ├── gather_info.sh
+│   └── run_lib.sh
 ├── data/
-│   ├── m1/
+│   ├── artemisia/
 │   │   └── machine_card.md
-│   ├── m2/
+│   ├── charnwood/
 │   │   └── machine_card.md
-│   ├── m3/
+│   ├── crux/
 │   │   └── machine_card.md
-│   ├── m4/
+│   ├── ookay/
 │   │   └── machine_card.md
-│   ├── m5/
+│   ├── skylark/
 │   │   └── machine_card.md
-│   ├── m6/
+│   ├── sunbird/
 │   │   └── machine_card.md
-│   ├── m7/
+│   ├── thunderbird/
 │   │   └── machine_card.md
-│   └── m8/
+│   └── upgrade/
 │       └── machine_card.md
 ├── docs/
+│   ├── FULL_GUIDE.md
 │   ├── enclave_setup.md
 │   ├── machines.md
-│   └── requirements.md
+│   ├── requirements.md
+│   └── runbook.md
 ├── exercises/
 │   ├── ex01_pipelined/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
 │   │   ├── README.md
+│   │   ├── analyze.py
+│   │   ├── pipe_test.c
 │   │   └── run.sh
 │   ├── ex01_pipelined_sgx/
 │   │   ├── .fleetignore
@@ -66,6 +75,8 @@ hw3/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
 │   │   ├── README.md
+│   │   ├── analyze.py
+│   │   ├── ooo_test.c
 │   │   └── run.sh
 │   ├── ex02_ooo_sgx/
 │   │   ├── .fleetignore
@@ -76,6 +87,8 @@ hw3/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
 │   │   ├── README.md
+│   │   ├── analyze.py
+│   │   ├── branch_test.c
 │   │   └── run.sh
 │   ├── ex03_branch_prediction_sgx/
 │   │   ├── .fleetignore
@@ -100,7 +113,9 @@ hw3/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
 │   │   ├── README.md
-│   │   └── run.sh
+│   │   ├── analyze.py
+│   │   ├── run.sh
+│   │   └── tlb_test.c
 │   ├── ex08_tlb_miss_cost_sgx/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
@@ -110,6 +125,8 @@ hw3/
 │   │   ├── .fleetignore
 │   │   ├── Makefile
 │   │   ├── README.md
+│   │   ├── analyze.py
+│   │   ├── btb_test.c
 │   │   └── run.sh
 │   ├── ex10_btb_capacity_sgx/
 │   │   ├── .fleetignore
@@ -125,6 +142,7 @@ hw3/
 │       ├── .fleetignore
 │       ├── Makefile
 │       ├── README.md
+│       ├── analyze_ex15.py
 │       └── run.sh
 ├── report/
 │   ├── figures/
@@ -134,10 +152,12 @@ hw3/
 │   ├── README.md
 │   └── report.md
 ├── scripts/
+│   ├── collect.py
 │   ├── fleet.sh
 │   ├── new_exercise.sh
 │   ├── package.sh
-│   └── summarize.py
+│   ├── summarize.py
+│   └── verify_repo.sh
 ├── .gitattributes
 ├── .gitignore
 ├── README.md
@@ -148,7 +168,7 @@ hw3/
 - `exercises/exNN_*`: one self-contained folder per exercise; `*_sgx` is the enclave variant.
 - `common/`: shared scripts (`gather_info.sh`, `freq_ctl.sh`) and C helpers (`include/bench_common.h`); deployed next to the exercises.
 - `scripts/`: `fleet.sh` (run on many machines), `summarize.py` (tables and plots), `package.sh` (submission ZIP), `new_exercise.sh` (scaffold).
-- `data/<machine>/<exercise>/<run>/`: raw results pulled from machines, plus one `machine_card.md` per machine. Committed (part of the submission).
+- `data/<machine>/<exercise>/<run>/`: raw results pulled from machines, plus one `machine_card.md` per machine (pre-filled for the 8 course machines). Committed (part of the submission).
 - `docs/`: `requirements.md` (checklist), `machines.md` (inventory table), `enclave_setup.md`.
 - `report/`: report skeleton, generated tables and figures.
 

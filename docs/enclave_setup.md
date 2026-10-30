@@ -30,3 +30,21 @@ to the native versions so differences come from the enclave, not the code.
 ## Layout
 Each exercise has a sibling `exNN_*_sgx/` folder. `scripts/fleet.sh` runs those only on machines with `sgx=yes`.
 ex15 (pipeline depth) is analysis of ex03 data, so its enclave comparison comes from `ex03_branch_prediction_sgx`.
+
+## Your machines: which can run enclaves
+
+| Machine(s) | In the CPU spec | What to expect on Linux |
+|---|---|---|
+| sunbird (Haswell-EP), skylark (EPYC / Zen 2), thunderbird (Arm Neoverse N1) | no SGX | report the limitation; native runs only (SGX is an Intel x86 feature; AMD has SEV, Arm has TrustZone/CCA) |
+| charnwood (i7-6700), ookay (i7-7700), upgrade (i7-8700), crux (i7-9700) | yes ("with Intel ME") | older client platforms generally lack Flexible Launch Control, so the in-kernel driver does not enable SGX; they need Intel's out-of-tree driver (`/dev/isgx`), BIOS SGX enabled, and root to install. Small EPC (~93 MiB usable). SGX1 only: no `rdtsc` inside |
+| artemisia (2x Xeon Gold 5420+) | yes (128 GB max enclave size) | server platform with Flexible Launch Control: kernel >= 5.11 exposes `/dev/sgx_enclave`; BIOS must enable SGX and allocate EPC. Large EPC, so the big benchmark buffers can fit |
+
+**Verify on each candidate** (no root needed for the first two):
+```bash
+grep -m1 -ow -E 'sgx|sgx_lc|sgx1|sgx2' /proc/cpuinfo | sort -u   # CPU flags the kernel exposes
+ls -l /dev/sgx_enclave /dev/sgx/enclave /dev/isgx 2>&1            # in-kernel / DCAP / legacy driver nodes
+dmesg | grep -i sgx                                               # needs root: explains "disabled in BIOS" etc.
+```
+If the flags are missing, SGX is probably disabled in the BIOS or locked out by the kernel (no `sgx_lc` means the in-kernel
+driver will not use it). If you have no root or BIOS access, ask the course staff which machine already has an enclave setup, and
+record the limitation for the others. Set `sgx=yes` in `machines.txt` only when a machine passes this check.

@@ -1,4 +1,4 @@
-bin/
+tlb_test
 results/
-*.o
 __pycache__/
+*.o

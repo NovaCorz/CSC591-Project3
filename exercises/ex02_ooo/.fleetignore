@@ -1,4 +1,4 @@
-bin/
+ooo_test
 results/
-*.o
 __pycache__/
+*.o

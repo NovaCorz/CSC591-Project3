@@ -1,0 +1,20 @@
+# TEMPLATE. Copy to machines.txt (git-ignored: it holds usernames/hostnames) and edit the ssh targets.
+# One line per machine, columns separated by spaces:
+#   id      ssh_target (or 'local')      runs                      sgx
+#
+#   id          short name; becomes the folder name under data/
+#   ssh_target  user@host (use ~/.ssh/config aliases + SSH keys), or the word  local  for the machine you are on
+#   runs        comma-separated LABEL:CORE pairs = which logical CPU to test and how to label it
+#                 normal CPU : cpu2:2            hybrid CPU : pcore:0,ecore:20 (both core types required)
+#   sgx         yes   = verified on the machine (flags + device present): *_sgx exercises run here
+#               cand  = CPU supports SGX but NOT yet verified/configured: treated as no until you set yes
+#               no    = CPU has no SGX
+# None of these eight machines is a hybrid CPU.
+sunbird       sunbird       cpu2:2   no     # 2x Xeon E5-2680 v3, Haswell-EP, 2014. No SGX (predates it)
+charnwood     charnwood     cpu2:2   cand   # Core i7-6700, Skylake, 2015
+ookay         ookay         cpu2:2   cand   # Core i7-7700, Kaby Lake, 2017
+upgrade       upgrade       cpu2:2   cand   # Core i7-8700, Coffee Lake, 2017
+crux          crux          cpu2:2   cand   # Core i7-9700, Coffee Lake Refresh, 2018
+skylark       skylark       cpu2:2   no     # 2x AMD EPYC 7532, Zen 2 / Rome, 2019. No SGX (AMD)
+thunderbird   thunderbird   cpu2:2   no     # Ampere Altra Q80-30, Neoverse N1, AArch64, 2020. x86 asm does NOT build here
+artemisia     artemisia     cpu2:2   cand   # 2x Xeon Gold 5420+, Sapphire Rapids, 2023. Best SGX candidate

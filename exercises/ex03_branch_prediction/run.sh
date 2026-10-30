@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
-# STUB: replace with the real entry point. Env: CORE LABEL (HP and tuning variables optional).
-echo "ex03_branch_prediction: not implemented yet" >&2
-exit 2
+# ex03 entry point (used by scripts/fleet.sh). Env: CORE LABEL [REPS=9]
+set -euo pipefail
+cd "$(dirname "$0")"
+COMMON=$(ls -d ../common ../../common 2>/dev/null | head -1 || true)
+source "$COMMON/run_lib.sh"
+rl_init ex03_branch_prediction
+./branch_test -c "$CORE" -r "${REPS:-9}" > "$OUT/data.csv"
+python3 analyze.py "$OUT/data.csv" --plot "$OUT/plot.png" | tee "$OUT/summary.txt"
+rl_finish

@@ -10,7 +10,7 @@ run os_release    cat /etc/os-release
 run lscpu         lscpu
 run lscpu_caches  lscpu -C
 run cpuinfo_core0 bash -c "awk -v RS= 'NR==1' /proc/cpuinfo"        # model name, family/model/stepping, flags
-run cpu_model     bash -c "grep -m1 'model name' /proc/cpuinfo"
+run cpu_model     "$(dirname "$0")/cpu_model.sh"
 run smt_active    cat /sys/devices/system/cpu/smt/active           # 1 = SMT/Hyper-Threading on
 run governor      bash -c "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | sort | uniq -c"
 run thp           cat /sys/kernel/mm/transparent_hugepage/enabled

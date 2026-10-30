@@ -7,6 +7,11 @@ machines.txt
 *.out
 bin/
 exercises/ex04_rob/rob_test
+exercises/ex01_pipelined/pipe_test
+exercises/ex02_ooo/ooo_test
+exercises/ex03_branch_prediction/branch_test
+exercises/ex08_tlb_miss_cost/tlb_test
+exercises/ex10_btb_capacity/btb_test
 exercises/*/results/
 
 # python / OS / editor noise

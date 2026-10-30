@@ -31,7 +31,7 @@ Tick items as they are completed. "Where" points to the file or folder that sati
 - [ ] Where enclave support/access is unavailable: limitation reported.
 
 ## Machine identification
-- [ ] CPU model and microarchitecture of each tested machine (`docs/machines.md`, `data/m*/machine_card.md`).
+- [ ] CPU model and microarchitecture of each tested machine (`docs/machines.md`, `data/<machine>/machine_card.md`).
 - [ ] Unsupported features and access limitations documented.
 
 ## Instructor clarifications

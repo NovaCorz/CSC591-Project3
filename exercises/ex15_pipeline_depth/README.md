@@ -1,27 +1,12 @@
-# ex15_pipeline_depth: Pipeline depth from misprediction penalty (10 points)
+# ex15_pipeline_depth: pipeline depth from the misprediction penalty (10 points)
 
-Status: [ ] code written  [ ] tested locally  [ ] run on both required machines (all 8 if doing the bonus)  [ ] >=3 repeats
-        [ ] enclave run (or limitation documented)  [ ] plots  [ ] in report
+Analysis only: it reuses the ex03 data (native, and the enclave variant if you have it). Nothing runs on the machines.
+Full walkthrough: [`docs/FULL_GUIDE.md`](../../docs/FULL_GUIDE.md).
 
-## Planned method
-Analysis only: reuse the ex03 data (native and enclave). Misprediction penalty in cycles = (T_random - T_predictable) / number_of_mispredictions, with the misprediction count known from the data pattern (not from counters). The penalty approximates the front-end-to-resolution pipeline length. Its run.sh should read results of ex03 and write its own results dir.
+```bash
+python3 exercises/ex15_pipeline_depth/analyze_ex15.py     # -> report/tables/ex15_pipeline_depth.csv/.md, report/figures/ex15_pipeline_depth.png
+```
 
-## What to measure / expected shape
-Typically in the range of roughly 15-20 cycles on recent Intel/AMD cores (verify on your machines). Explain what the number reveals and what it does not (it is not exactly the full pipeline depth).
-
-(Expectations are hypotheses to check against your data, not results to quote.)
-
-## Evidence rules (course)
-- Primary evidence is **timing only**. Hardware counters may be used afterwards, clearly labeled as a double-check.
-- Hybrid CPUs: test both P-cores and E-cores. Fixed frequency is allowed only with coordination, and must be restored.
-- Separate measured findings from published specifications in the report.
-
-## Contract with scripts/fleet.sh
-`run.sh` reads env `CORE` and `LABEL` (plus optional tuning variables), pins to `CORE`, and writes
-`results/<host>_<label>_hp<HP>_<runid>/` containing `run_config.txt` (`core= label= hp= run=`), the raw CSV(s),
-summaries/plots, and `sysinfo/` (call `../common/gather_info.sh`). Use `../common/include/bench_common.h` for timing helpers.
-See `exercises/ex04_rob/run_rob.sh` for a complete example.
-
-## Results log
-| machine | CPU / microarchitecture | label | result | notes |
-|---|---|---|---|---|
+penalty (cycles) = ns lost per misprediction x core clock (both the regression slope and the (random50 - sorted)/0.5 estimate from ex03).
+The penalty is the front-end pipeline length PLUS the latency of what the branch waits for (an L1 load and a compare in this loop),
+so it is an upper bound on the front-end depth. Discuss that gap, and why a measured penalty cannot give an exact stage count.

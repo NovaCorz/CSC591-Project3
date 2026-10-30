@@ -1,4 +1,4 @@
-bin/
+btb_test
 results/
-*.o
 __pycache__/
+*.o

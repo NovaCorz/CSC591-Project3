@@ -47,10 +47,17 @@ else:
     print(f"ESTIMATED ROB SIZE ~ N_knee + 2  : {knee + 2}  (+/- the sweep step; refine with -t 1)")
     print(f"KNEE_N={knee}")
 
+try:
+    if a.plot:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+except ImportError:
+    print("NOTE: matplotlib is not installed here, so no plot was made. The numbers above are unaffected. "
+          "Plots are regenerated on your own computer by: python3 scripts/summarize.py <exercise>")
+    a.plot = None
+
 if a.plot:
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
     q1 = [st.quantiles(rows[n], n=4)[0] if len(rows[n]) > 3 else min(rows[n]) for n in ns]
     q3 = [st.quantiles(rows[n], n=4)[2] if len(rows[n]) > 3 else max(rows[n]) for n in ns]
     plt.figure(figsize=(8, 4.5))

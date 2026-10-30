@@ -16,20 +16,16 @@
 //   That stops the out-of-order window from overlapping *different* iterations.
 //
 //   The NOP count is varied WITHOUT JIT: the asm contains a sled of MAX_NOPS NOPs and an indirect jump
-//   enters the sled N bytes before its end. (No RWX memory needed -> portable to SGX enclaves.)
+//   enters the sled N instructions before its end. (No RWX memory needed -> portable to SGX enclaves.)
+//   Written for x86-64 and AArch64 in this one file; the compiler selects the matching kernel.
 //
 // OUTPUT (stdout, CSV):  nops,rep,tsc_per_iter,ns_per_iter      ('#' lines are metadata)
 
-#define _GNU_SOURCE
+#include "bench_common.h"   // timing, pinning, flushing helpers for x86-64 and AArch64 (common/include)
 #include <getopt.h>
-#include <sched.h>
-#include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
-#include <time.h>
-#include <unistd.h>
 
 #define XSTR(x) #x
 #define STR(x) XSTR(x)
@@ -37,36 +33,18 @@
 #define LINE 64UL
 #define HUGE_SZ (2UL << 20)
 
-// ---------- timing / cache helpers (inline asm) ----------
-static inline uint64_t tsc_begin(void) {
-    uint32_t lo, hi;
-    __asm__ volatile("lfence\n\trdtsc" : "=a"(lo), "=d"(hi)::"memory");
-    return ((uint64_t)hi << 32) | lo;
-}
-static inline uint64_t tsc_end(void) {
-    uint32_t lo, hi;
-    __asm__ volatile("rdtscp\n\tlfence" : "=a"(lo), "=d"(hi)::"rcx", "memory");
-    return ((uint64_t)hi << 32) | lo;
-}
-static inline void clflush(const void *p) { __asm__ volatile("clflush (%0)" ::"r"(p) : "memory"); }
-static inline void mfence(void) { __asm__ volatile("mfence" ::: "memory"); }
-
-static inline double now_ns(void) {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return ts.tv_sec * 1e9 + ts.tv_nsec;
-}
-
 // ---------- the kernel ----------
 // offs : 2*iters byte-offsets (multiples of 64) into base; offs[2i] -> load A, offs[2i+1] -> load B
 // base : buffer of zeros, much larger than the LLC
-// nops : number of NOPs between A and B (0..MAX_NOPS)
+// nops : number of filler instructions between A and B (0..MAX_NOPS)
+// The same experiment is written twice, once per ISA; the compiler picks the right one. Everything else is shared.
+#if defined(__x86_64__)
 __attribute__((noinline)) static void rob_kernel(const uint64_t *offs, const char *base,
                                                  uint64_t iters, uint64_t nops) {
     __asm__ volatile(
         "xor   %%r9d, %%r9d            \n\t" // r9 = value loaded by previous B (always 0)
         "lea   3f(%%rip), %%r10        \n\t" // r10 = end of NOP sled
-        "sub   %[n], %%r10             \n\t" // r10 = entry point: exactly n NOPs before label 3
+        "sub   %[n], %%r10             \n\t" // r10 = entry point: exactly n NOPs (1 byte each) before label 3
         "1:                            \n\t"
         "mov   (%%rdi), %%rax          \n\t" // offset for A
         "mov   8(%%rdi), %%rcx         \n\t" // offset for B
@@ -86,24 +64,47 @@ __attribute__((noinline)) static void rob_kernel(const uint64_t *offs, const cha
         : "S"(base), [n] "r"(nops)
         : "rax", "rcx", "r8", "r9", "r10", "cc", "memory");
 }
+#elif defined(__aarch64__)
+// Every A64 instruction is 4 bytes, so the entry point is 4*n bytes before the end of the sled.
+// Filler instruction: `nop` by default. If a core drops NOPs before the ROB, no knee appears; then rebuild with the
+// independent ALU filler:   make CFLAGS_EXTRA=-DROB_FILLER_ALU     (via fleet.sh: MAKE_ARGS="CFLAGS_EXTRA=-DROB_FILLER_ALU")
+// and discuss in the report that ALU fillers also occupy scheduler entries, so that knee may be lower than the ROB size.
+#ifndef FILLER
+#  ifdef ROB_FILLER_ALU
+#    define FILLER "add x11, xzr, xzr"
+#  else
+#    define FILLER "nop"
+#  endif
+#endif
+__attribute__((noinline)) static void rob_kernel(const uint64_t *offs, const char *base,
+                                                 uint64_t iters, uint64_t nops) {
+    __asm__ volatile(
+        "mov   x9, xzr                          \n\t" // x9 = value loaded by previous B (always 0)
+        "adr   x10, 3f                          \n\t" // x10 = end of filler sled
+        "sub   x10, x10, %[n], lsl #2           \n\t" // x10 = entry point: n instructions (4 bytes each) before label 3
+        "1:                                     \n\t"
+        "ldr   x4, [%[o]]                       \n\t" // offset for A
+        "ldr   x5, [%[o], #8]                   \n\t" // offset for B
+        "add   x4, x4, x9                       \n\t" // A address depends on previous B (adds 0)
+        "add   x5, x5, x9                       \n\t" // B address depends on previous B (adds 0)
+        "ldr   x6, [%[b], x4]                   \n\t" // load A  (DRAM miss)
+        "br    x10                              \n\t" // enter the sled
+        ".rept " STR(MAX_NOPS) "                \n\t"
+        FILLER "                                \n\t"
+        ".endr                                  \n\t"
+        "3:                                     \n\t"
+        "ldr   x9, [%[b], x5]                   \n\t" // load B  (DRAM miss)
+        "add   %[o], %[o], #16                  \n\t"
+        "subs  %[it], %[it], #1                 \n\t"
+        "b.ne  1b                               \n\t"
+        : [o] "+r"(offs), [it] "+r"(iters)
+        : [b] "r"(base), [n] "r"(nops)
+        : "x4", "x5", "x6", "x9", "x10", "x11", "cc", "memory");
+}
+#endif
 
 // ---------- misc ----------
 static uint64_t rng = 88172645463325252ULL;
-static inline uint64_t xorshift64(void) {
-    rng ^= rng << 13;
-    rng ^= rng >> 7;
-    rng ^= rng << 17;
-    return rng;
-}
-
-static double tsc_ghz(void) {
-    double t0 = now_ns();
-    uint64_t c0 = tsc_begin();
-    usleep(200000);
-    uint64_t c1 = tsc_end();
-    double t1 = now_ns();
-    return (double)(c1 - c0) / (t1 - t0);
-}
 
 static void usage(const char *p) {
     fprintf(stderr,
@@ -136,12 +137,7 @@ int main(int argc, char **argv) {
     }
     if (e > MAX_NOPS || s < 0 || t < 1) { usage(argv[0]); return 1; }
 
-    if (core >= 0) {
-        cpu_set_t set;
-        CPU_ZERO(&set);
-        CPU_SET(core, &set);
-        if (sched_setaffinity(0, sizeof(set), &set)) { perror("sched_setaffinity"); return 1; }
-    }
+    if (core >= 0 && pin_to_cpu(core)) { perror("sched_setaffinity"); return 1; }
 
     // Buffer: 2 MiB aligned, explicitly written (so no shared zero page), contents all zero.
     size_t size = mb << 20;
@@ -155,7 +151,7 @@ int main(int argc, char **argv) {
     if (!offs) { perror("malloc"); return 1; }
     uint64_t nlines = size / LINE;
 
-    printf("# core=%d buf_MiB=%zu iters=%lu reps=%d hugepages=%d tsc_ghz=%.4f\n", core, mb,
+    printf("# arch=%s core=%d buf_MiB=%zu iters=%lu reps=%d hugepages=%d tsc_ghz=%.4f\n", BENCH_ARCH, core, mb,
            (unsigned long)iters, reps, hp, tsc_ghz());
     printf("nops,rep,tsc_per_iter,ns_per_iter\n");
 
@@ -165,8 +161,8 @@ int main(int argc, char **argv) {
     for (int r = -warm; r < reps; r++) {
         for (int n = s; n <= e; n += t) {
             // Fresh random lines every run, then flush them so every load goes to DRAM.
-            for (uint64_t i = 0; i < 2 * iters; i++) offs[i] = (xorshift64() % nlines) * LINE;
-            for (uint64_t i = 0; i < 2 * iters; i++) clflush(buf + offs[i]);
+            for (uint64_t i = 0; i < 2 * iters; i++) offs[i] = (xorshift64(&rng) % nlines) * LINE;
+            for (uint64_t i = 0; i < 2 * iters; i++) clflush_line(buf + offs[i]);
             mfence();
 
             double n0 = now_ns();

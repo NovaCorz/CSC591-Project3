@@ -39,7 +39,7 @@ These come from the instructor's clarifications and are built into the scripts.
 
 - Fixing frequency is not required. The knee is measured in instructions, so it should not move with frequency; fixing mostly reduces noise and lets you convert TSC ticks to core cycles.
 - Before touching anything: get permission from whoever manages the machine, and check nobody else is using it (`who`).
-- Use `../common/freq_ctl.sh` (paths in this README are relative to the exercise folder on the machine, `hw3_run/ex04_rob`; `common/` is deployed next to it). `save` snapshots the original settings and refuses to overwrite an existing snapshot, so the originals are never lost. `restore` puts them back and prints the state.
+- Use `../common/freq_ctl.sh` (paths in this README are relative to the exercise folder on the machine, `CSC591-Project3/ex04_rob`; `common/` is deployed next to it). `save` snapshots the original settings and refuses to overwrite an existing snapshot, so the originals are never lost. `restore` puts them back and prints the state.
 - `run_rob.sh` records the frequency state in `freq_during_run.txt` for every run, and warns at the end if a snapshot still exists (settings not yet restored).
 - In the report: state whether frequency was fixed, to what, and that the original settings were restored.
 
@@ -67,7 +67,7 @@ CORE=20 LABEL=ecore ./run_rob.sh
 
 | File | Purpose |
 |---|---|
-| `rob_test.c` | harness: C driver + inline-asm kernel (timing only) |
+| `rob_test.c` | harness: C driver + inline-asm kernel, one file for **x86-64 and AArch64** (timing only) |
 | `Makefile` | builds `rob_test` |
 | `run_rob.sh` | **primary** run: system info, coarse + fine sweep, plots; enforces hybrid rule |
 | `analyze_rob.py` | finds the knee, prints the estimate, plots (`matplotlib` needed for `--plot`) |
@@ -160,6 +160,7 @@ time
 | Intel Ice Lake / Sunny Cove | 352 | ~350 |
 | Intel Golden Cove / Raptor Cove (P-cores) | 512 | ~510 |
 | Intel Gracemont (E-cores) | 256 | ~254 |
+| Arm Neoverse N1 (AArch64) | 128 (public reviews; verify) | ~126, if NOPs count (see section 11) |
 | Intel Skymont (newer E-cores) | 416 (verify) | ~414 |
 | Intel Lion Cove (newer P-cores) | 576 (verify) | ~574 |
 | AMD Zen / Zen+ | 192 | ~190 |
@@ -187,6 +188,9 @@ Possible deviations to discuss: AMD counts retire-queue entries differently (mac
 | `run_rob.sh`: "Hybrid CPU detected" | Set `LABEL=pcore` or `ecore` and pick a CPU of that type from `hybrid_cores.txt`. |
 | `perf_check.sh` refuses | Run `run_rob.sh` first (R1). That is intentional. |
 | `Permission denied` running `./rob_test` | Directory mounted `noexec`; copy the folder elsewhere. |
+| `ModuleNotFoundError: matplotlib` on a machine | fixed: plotting is optional there. Plots are rebuilt on your computer by `python3 scripts/summarize.py ex04_rob` |
+| `Connection closed by <ip> port 22` after the password prompt | login failed (wrong password / too many attempts / not allowed). Test `ssh <target>` by hand; use SSH keys. Not a code problem |
+| `unknown register name 'rcx' in 'asm'` | old x86-only version of `rob_test.c` on an Arm machine: redeploy the current one |
 | `mmap` fails | Not enough free RAM; lower `-m` (stay well above the LLC). |
 
 ## 9. Enclave (SGX) version: notes for your report
@@ -210,3 +214,25 @@ The kernel is plain `mov`/`nop`/`jmp` with no counters, so it runs unchanged ins
 - Hybrid machines: both P-core and E-core results and the comparison.
 - Explanation of differences between the two machines; unsupported features and access limits.
 - AI-use log (Track B).
+
+## 11. Architectures (one source file, no per-machine scripts)
+
+`rob_test.c` contains the same experiment written twice (x86-64 and AArch64 inline asm); the compiler selects the matching one
+(`#if defined(__x86_64__)` / `__aarch64__`). The shared helpers in `../common/include/bench_common.h` do the same for timing,
+cache-line flush and fences. `Makefile`, `run.sh`, `run_rob.sh`, `analyze_rob.py` and `fleet.sh` are architecture-independent.
+
+| | x86-64 | AArch64 |
+|---|---|---|
+| filler | 1-byte `nop` | 4-byte `nop` (A64 instructions are all 4 bytes) |
+| sled entry | `jmp *r10` to `end - n` bytes | `br x10` to `end - 4n` bytes |
+| timer | TSC (`rdtsc`/`rdtscp`) | generic timer `cntvct_el0` (25-62.5 MHz, coarse: use the `ns` columns) |
+| flush / fence | `clflush` / `mfence` | `dc civac` / `dsb sy` |
+
+**Testing status of the AArch64 port:** I could only test it in an emulator. It compiles without warnings, and a functional
+test confirmed that exactly N filler instructions execute per iteration for N from 0 to 1024. The *timing* behavior on real
+Arm hardware (Ampere Altra / Neoverse N1) is untested. Things that may need attention:
+- Some cores remove NOPs before the reorder buffer, so no knee appears. Then rebuild with the independent ALU filler:
+  `MAKE_ARGS="CFLAGS_EXTRA=-DROB_FILLER_ALU" bash scripts/fleet.sh all ex04_rob thunderbird`. ALU fillers also occupy scheduler
+  entries, so that knee may sit below the true ROB size; report and discuss both.
+- `dc civac` from user space is normally allowed on Linux; if it faults, the run stops with an illegal-instruction error.
+- Per-run `gather_info` uses `lscpu` for the model name on Arm (`/proc/cpuinfo` has no "model name" there).

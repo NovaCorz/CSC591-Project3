@@ -1,27 +1,26 @@
 # ex02_ooo: Is execution out of order? (10 points)
 
-Status: [ ] code written  [ ] tested locally  [ ] run on both required machines (all 8 if doing the bonus)  [ ] >=3 repeats
-        [ ] enclave run (or limitation documented)  [ ] plots  [ ] in report
+Status: implemented for x86-64 (tested in a sandbox VM; run it on your machines). Not ported to AArch64 (skip the Arm machine).
+Full walkthrough with expected output: [`docs/FULL_GUIDE.md`](../../docs/FULL_GUIDE.md).
 
-## Planned method
-Place independent work after a cache-missing load. If the runtime does not grow with the amount of independent filler (up to a point), later instructions executed past the stalled load. Control: make the filler **depend** on the load; then time should grow with the filler. Same timing harness as ex04.
+## Method
+A cache-missing load followed by F filler adds: filler that does NOT depend on the load is executed under the miss (flat time), identical filler that DEPENDS on the load adds ~1 cycle each (linear). The next load's address depends on the filler chain end, so the chain is on the critical path in both variants.
 
-## What to measure / expected shape
-Flat time vs filler for independent work until the window fills (this knee is the ROB experiment, ex04), linear growth for dependent work. The two curves side by side are the evidence.
+## Files
+`ooo_test.c` (measurement, inline asm) | `analyze.py` (analysis + plot) | `run.sh` (entry point used by `scripts/fleet.sh`) | `Makefile`
 
-(Expectations are hypotheses to check against your data, not results to quote.)
+## Run
+```bash
+bash scripts/fleet.sh all ex02_ooo                 # deploy + run + pull on every machine in machines.txt
+python3 scripts/collect.py ex02_ooo                # table over machines/runs -> report/tables/
+```
+Repeat at least 3 times per machine. Env knobs: `CORE`, `LABEL`, `REPS` (see run.sh). Results per run: `data.csv`, `summary.txt`, `plot.png`, `sysinfo/`.
+
+## Result keys (summary.txt, `KEY=value`)
+OUT_OF_ORDER, MISS_LATENCY_NS, DEP_COST_NS, INDEP_COST_NS, DEP_CYCLES_PER_FILLER, INDEP_RISE_F
+
+## Caveat
+INDEP_RISE_F (where the independent curve starts to rise) need not equal the ROB size from ex04: other structures can limit the window first. Report it as a window indicator, not as the ROB size.
 
 ## Evidence rules (course)
-- Primary evidence is **timing only**. Hardware counters may be used afterwards, clearly labeled as a double-check.
-- Hybrid CPUs: test both P-cores and E-cores. Fixed frequency is allowed only with coordination, and must be restored.
-- Separate measured findings from published specifications in the report.
-
-## Contract with scripts/fleet.sh
-`run.sh` reads env `CORE` and `LABEL` (plus optional tuning variables), pins to `CORE`, and writes
-`results/<host>_<label>_hp<HP>_<runid>/` containing `run_config.txt` (`core= label= hp= run=`), the raw CSV(s),
-summaries/plots, and `sysinfo/` (call `../common/gather_info.sh`). Use `../common/include/bench_common.h` for timing helpers.
-See `exercises/ex04_rob/run_rob.sh` for a complete example.
-
-## Results log
-| machine | CPU / microarchitecture | label | result | notes |
-|---|---|---|---|---|
+Primary evidence is timing only; hardware counters, if used at all, only as a labeled double-check afterwards.

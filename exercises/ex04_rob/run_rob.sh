@@ -58,7 +58,8 @@ else
   echo "WARNING: no knee found in the coarse sweep (see warning above). No ROB estimate was produced."
 fi
 python3 analyze_rob.py "$OUT/coarse.csv" --plot "$OUT/coarse.png" --title "$TAG coarse sweep" >/dev/null || true
-echo "PRIMARY results (timing only) in $OUT/"
+echo "PRIMARY results (timing only) are on THIS machine in: $(pwd)/$OUT/"
+echo "(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)"
 
 # ---- reminders ----
 if [ "$HYB" = 1 ] && [ -z "$(ls -d results/$(hostname)_${OTHER}_hp${HP}_* 2>/dev/null)" ]; then
