@@ -1,4 +1,0 @@
-bin/
-results/
-*.o
-__pycache__/
