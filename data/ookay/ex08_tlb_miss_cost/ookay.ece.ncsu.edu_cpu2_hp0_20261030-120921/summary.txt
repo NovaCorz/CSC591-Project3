@@ -1,0 +1,46 @@
+core clock estimate: 4.18 GHz   |   THP setting: madvise   |   huge-page-backed memory: 4096 kB
+ P (pages)   dense ns  sparse ns   translation cost ns   cycles
+         8       1.00       0.96                 -0.05     -0.2
+        16       0.96       0.96                  0.00      0.0
+        24       0.96       0.96                  0.00      0.0
+        32       0.96       0.96                  0.00      0.0
+        48       0.96       0.96                  0.00      0.0
+        64       0.96       0.96                  0.00      0.0
+        96       0.96       3.11                  2.15      9.0
+       128       0.96       3.11                  2.15      9.0
+       192       0.96       3.11                  2.15      9.0
+       256       0.96       3.12                  2.17      9.1
+       384       0.96       3.11                  2.15      9.0
+       512       0.96       3.11                  2.16      9.0
+       768       2.88       5.38                  2.50     10.4
+      1024       2.87       5.48                  2.61     10.9
+      1536       2.87       5.95                  3.08     12.9
+      2048       2.88       9.95                  7.06     29.5
+      3072       2.87      12.10                  9.23     38.6
+      4096       2.90      13.90                 11.00     46.0
+      6144       6.84      15.20                  8.35     34.9
+      8192       7.39      15.93                  8.54     35.7
+     12288       8.02      16.72                  8.71     36.4
+     16384       8.31      17.58                  9.27     38.8
+     32768       8.72      45.27                 36.55    152.9
+     65536       8.91      67.05                 58.14    243.1
+
+L1-DTLB miss (L2-TLB hit) cost ~ 2.16 ns = 9.0 cycles   (window P=192..768)
+page walk, page tables cached  ~ 9.23 ns = 38.6 cycles   (3 points from the second step, P>=2048)
+page walk, page tables cold     ~ 47.35 ns = 198.0 cycles   (P>=32768)
+first step up at P ~ 96  (L1 DTLB reach in entries: between the previous grid point and this one)
+L2 TLB starts to be exceeded at P ~ 2048  (capacity: between the previous grid point and 2048)
+full page-walk level reached at P ~ 2048
+TLB_L1MISS_NS=2.16
+TLB_L1MISS_CYCLES=9.0
+TLB_WALK_NS=9.23
+TLB_WALK_CYCLES=38.6
+TLB_WALK_COLD_NS=47.35
+TLB_WALK_COLD_CYCLES=198.0
+TLB_STEP1_P=96
+TLB_STEP2_START_P=2048
+TLB_STEP2_P=2048
+DENSE_HUGEPAGES=yes
+CORE_GHZ=4.182
+STATUS=ok
+plot written to results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-120921/plot.png

@@ -1,0 +1,2 @@
+$ bash -c grep -m1 flags /proc/cpuinfo | tr ' ' '\n' | grep -E 'tsc|constant|nonstop' | tr '\n' ' '
+tsc rdtscp constant_tsc nonstop_tsc tsc_deadline_timer tsc_adjust 

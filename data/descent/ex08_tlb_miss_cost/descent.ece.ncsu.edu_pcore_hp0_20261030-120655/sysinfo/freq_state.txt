@@ -1,0 +1,22 @@
+$ ../common/freq_ctl.sh status
+cpu0 gov=powersave min=400000 max=5000000 cur=584499
+cpu1 gov=powersave min=400000 max=5000000 cur=400000
+cpu10 gov=powersave min=400000 max=5000000 cur=1074720
+cpu11 gov=powersave min=400000 max=5000000 cur=400000
+cpu12 gov=powersave min=400000 max=3900000 cur=1971315
+cpu13 gov=powersave min=400000 max=3900000 cur=400673
+cpu14 gov=powersave min=400000 max=3900000 cur=592659
+cpu15 gov=powersave min=400000 max=3900000 cur=1882064
+cpu16 gov=powersave min=400000 max=3900000 cur=485942
+cpu17 gov=powersave min=400000 max=3900000 cur=2289634
+cpu18 gov=powersave min=400000 max=3900000 cur=683980
+cpu19 gov=powersave min=400000 max=3900000 cur=1901135
+cpu2 gov=powersave min=400000 max=5000000 cur=742653
+cpu3 gov=powersave min=400000 max=5000000 cur=400000
+cpu4 gov=powersave min=400000 max=5200000 cur=736727
+cpu5 gov=powersave min=400000 max=5200000 cur=1583204
+cpu6 gov=powersave min=400000 max=5200000 cur=394764
+cpu7 gov=powersave min=400000 max=5200000 cur=400000
+cpu8 gov=powersave min=400000 max=5000000 cur=1060869
+cpu9 gov=powersave min=400000 max=5000000 cur=400000
+intel_pstate no_turbo=0

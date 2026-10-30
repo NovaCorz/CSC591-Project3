@@ -1,0 +1,3 @@
+$ ../common/cpu_model.sh
+model name : Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz
+architecture : x86_64

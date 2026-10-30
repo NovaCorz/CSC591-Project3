@@ -1,0 +1,50 @@
+[artemisia] run ex08_tlb_miss_cost label=cpu29 core=29 
+== ex08_tlb_miss_cost on CPU 29 (cpu29) ==
+core clock estimate: 2.69 GHz   |   THP setting: always   |   huge-page-backed memory: 4096 kB
+ P (pages)   dense ns  sparse ns   translation cost ns   cycles
+         8       1.86       1.86                  0.00      0.0
+        16       1.86       1.86                  0.00      0.0
+        24       1.86       1.86                  0.00      0.0
+        32       1.86       1.86                 -0.00     -0.0
+        48       1.86       1.86                 -0.00     -0.0
+        64       1.86       1.86                 -0.00     -0.0
+        96       1.86       1.86                  0.00      0.0
+       128       1.86       4.47                  2.60      7.0
+       192       1.86       4.47                  2.61      7.0
+       256       1.86       4.47                  2.61      7.0
+       384       1.86       4.47                  2.60      7.0
+       512       1.86       4.47                  2.61      7.0
+       768       1.88       4.48                  2.60      7.0
+      1024       5.94       8.57                  2.63      7.1
+      1536       5.96       8.87                  2.91      7.8
+      2048       5.96      10.78                  4.82     12.9
+      3072       5.96      13.95                  7.99     21.5
+      4096       5.96      14.52                  8.56     23.0
+      6144       5.96      15.26                  9.30     25.0
+      8192       5.96      15.67                  9.71     26.1
+     12288       5.96      16.13                 10.18     27.3
+     16384       5.96      16.59                 10.63     28.6
+     32768       6.34      30.81                 24.47     65.7
+     65536      30.43      43.92                 13.49     36.3
+
+L1-DTLB miss (L2-TLB hit) cost ~ 2.61 ns = 7.0 cycles   (window P=192..768)
+page walk, page tables cached  ~ 8.56 ns = 23.0 cycles   (3 points from the second step, P>=3072)
+page walk, page tables cold     ~ 18.98 ns = 51.0 cycles   (P>=32768)
+first step up at P ~ 128  (L1 DTLB reach in entries: between the previous grid point and this one)
+L2 TLB starts to be exceeded at P ~ 2048  (capacity: between the previous grid point and 2048)
+full page-walk level reached at P ~ 3072
+TLB_L1MISS_NS=2.61
+TLB_L1MISS_CYCLES=7.0
+TLB_WALK_NS=8.56
+TLB_WALK_CYCLES=23.0
+TLB_WALK_COLD_NS=18.98
+TLB_WALK_COLD_CYCLES=51.0
+TLB_STEP1_P=128
+TLB_STEP2_START_P=2048
+TLB_STEP2_P=3072
+DENSE_HUGEPAGES=yes
+CORE_GHZ=2.687
+STATUS=ok
+plot written to results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-120808/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/artemisia/ex08_tlb_miss_cost/results/artemisia.ece.ncsu.edu_cpu29_hp0_20261030-120808/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

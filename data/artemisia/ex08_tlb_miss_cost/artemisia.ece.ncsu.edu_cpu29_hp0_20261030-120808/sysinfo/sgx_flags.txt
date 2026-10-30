@@ -1,0 +1,11 @@
+$ bash -c grep -m1 flags /proc/cpuinfo | tr ' ' '\n' | grep -i sgx | tr '\n' ' '; echo; ls -l /dev/sgx* /dev/isgx 2>&1
+sgx sgx_lc 
+ls: cannot access '/dev/isgx': No such file or directory
+crw-rw-rw-. 1 root sgx     10, 258 Oct 28 18:32 /dev/sgx_enclave
+crw-rw----. 1 root sgx_prv 10, 257 Oct 26 12:35 /dev/sgx_provision
+crw-rw----. 1 root sgx     10, 259 Oct 26 12:35 /dev/sgx_vepc
+
+/dev/sgx:
+total 0
+lrwxrwxrwx. 1 root root 14 Oct 28 18:32 enclave -> ../sgx_enclave
+lrwxrwxrwx. 1 root root 16 Oct 26 12:35 provision -> ../sgx_provision

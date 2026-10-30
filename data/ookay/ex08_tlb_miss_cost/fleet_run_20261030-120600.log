@@ -1,0 +1,50 @@
+[ookay] run ex08_tlb_miss_cost label=cpu2 core=2 
+== ex08_tlb_miss_cost on CPU 2 (cpu2) ==
+core clock estimate: 4.18 GHz   |   THP setting: madvise   |   huge-page-backed memory: 4096 kB
+ P (pages)   dense ns  sparse ns   translation cost ns   cycles
+         8       0.96       0.96                  0.00      0.0
+        16       0.96       0.96                  0.00      0.0
+        24       0.96       0.96                  0.00      0.0
+        32       0.96       0.96                  0.00      0.0
+        48       0.96       0.96                  0.00      0.0
+        64       0.96       0.96                  0.00      0.0
+        96       0.96       3.11                  2.15      9.0
+       128       0.96       3.12                  2.17      9.1
+       192       0.96       3.12                  2.17      9.1
+       256       0.96       3.11                  2.15      9.0
+       384       0.96       3.11                  2.15      9.0
+       512       0.96       3.12                  2.17      9.1
+       768       2.87       5.06                  2.19      9.2
+      1024       2.87       5.23                  2.36      9.9
+      1536       2.87       5.59                  2.72     11.4
+      2048       2.87       9.54                  6.67     27.9
+      3072       2.88      11.90                  9.02     37.7
+      4096       2.89      13.83                 10.93     45.7
+      6144       6.85      15.60                  8.75     36.6
+      8192       7.38      15.99                  8.61     36.0
+     12288       8.01      16.95                  8.94     37.4
+     16384       8.31      17.73                  9.42     39.4
+     32768       8.71      44.38                 35.68    149.2
+     65536       8.88      66.54                 57.66    241.1
+
+L1-DTLB miss (L2-TLB hit) cost ~ 2.17 ns = 9.1 cycles   (window P=192..768)
+page walk, page tables cached  ~ 9.02 ns = 37.7 cycles   (3 points from the second step, P>=2048)
+page walk, page tables cold     ~ 46.67 ns = 195.2 cycles   (P>=32768)
+first step up at P ~ 96  (L1 DTLB reach in entries: between the previous grid point and this one)
+L2 TLB starts to be exceeded at P ~ 2048  (capacity: between the previous grid point and 2048)
+full page-walk level reached at P ~ 2048
+TLB_L1MISS_NS=2.17
+TLB_L1MISS_CYCLES=9.1
+TLB_WALK_NS=9.02
+TLB_WALK_CYCLES=37.7
+TLB_WALK_COLD_NS=46.67
+TLB_WALK_COLD_CYCLES=195.2
+TLB_STEP1_P=96
+TLB_STEP2_START_P=2048
+TLB_STEP2_P=2048
+DENSE_HUGEPAGES=yes
+CORE_GHZ=4.182
+STATUS=ok
+plot written to results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-120557/plot.png
+PRIMARY results (timing only) are on THIS machine in: /home/jrkuethe/CSC591-Project3/ookay/ex08_tlb_miss_cost/results/ookay.ece.ncsu.edu_cpu2_hp0_20261030-120557/
+(if you started this with fleet.sh, the pull step copies them into data/<machine>/<exercise>/ in your repo)

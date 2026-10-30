@@ -1,0 +1,4 @@
+$ bash -c grep -m1 flags /proc/cpuinfo | tr ' ' '\n' | grep -i sgx | tr '\n' ' '; echo; ls -l /dev/sgx* /dev/isgx 2>&1
+
+ls: cannot access '/dev/sgx*': No such file or directory
+ls: cannot access '/dev/isgx': No such file or directory
