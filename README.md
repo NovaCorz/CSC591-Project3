@@ -119,7 +119,7 @@ hw3/
 ## Quick start
 
 ```bash
-git clone <your private repo> && cd hw3
+git clone <your private repo> && cd CSC-Project3
 cp machines.example.txt machines.txt      # then edit: ssh targets, CPUs to test, sgx yes/no (git-ignored)
 bash scripts/fleet.sh status              # check machines are idle; see hybrid/SGX
 bash scripts/fleet.sh all ex04_rob        # deploy + build + run + pull on every machine
