@@ -7,14 +7,14 @@ Findings are established from **timing**; performance counters are only a labele
 
 ## Status
 
-| Exercise | Pts | Native code | 
-|---|---|---|---|---|
-| ex01 pipelined | 10 | **implemented** (x86-64, sandbox-tested) | 
-| ex02 ooo | 10 | **implemented** (x86-64, sandbox-tested) | 
-| ex03 branch prediction | 10 | **implemented** (x86-64, sandbox-tested) | 
-| ex04 ROB | 30 | **implemented**, x86-64 and AArch64 (x86 run on real machines; AArch64 only emulator-tested) |
-| ex08 TLB miss cost | 10 | **implemented** (x86-64, sandbox-tested) |
-| ex10 BTB capacity | 20 | **implemented** (x86-64, sandbox-tested) |
+| Exercise | Pts | Native code |
+|---|---|---|
+| ex01 pipelined | 10 | **implemented**| 
+| ex02 ooo | 10 | **implemented** | 
+| ex03 branch prediction | 10 | **implemented** | 
+| ex04 ROB | 30 | **implemented**|
+| ex08 TLB miss cost | 10 | **implemented** |
+| ex10 BTB capacity | 20 | **implemented** |
 | ex15 pipeline depth | 10 | **implemented** (analysis of ex03 data) |
 
 
