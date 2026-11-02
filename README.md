@@ -5,8 +5,6 @@ Selected exercises (100 points): **1** pipelined, **2** out-of-order, **3** bran
 Every exercise runs natively on at least two machines **and** inside an SGX enclave where available.
 Findings are established from **timing**; performance counters are only a labeled double-check.
 
-> Keep this repository **private**: it contains homework code and measurements.
-
 ## Status
 
 | Exercise | Pts | Native code | 
@@ -93,6 +91,7 @@ hw3/
 │       ├── analyze_ex15.py
 │       └── run.sh
 ├── report/
+│   ├── CSC591_Project3.pdf
 │   ├── figures/
 │   │   └── .gitkeep
 │   ├── tables/
